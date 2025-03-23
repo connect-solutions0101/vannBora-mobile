@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mobilevan.telas.NovoTrajetoPrev
+import com.example.mobilevan.ui.screens.NovoTrajetoPrev
 import com.example.mobilevan.ui.theme.AzulVann
 
 class Main : ComponentActivity() {
@@ -66,7 +66,7 @@ fun HomeTopBar(
     containerColor: Color,
     titleContentColor: Color = Color.White,
     navigationIconContentColor: Color = Color.White,
-    actionIconContentColor: Color = Color.White,
+    actionIconContentColor: Color = Color.White
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),

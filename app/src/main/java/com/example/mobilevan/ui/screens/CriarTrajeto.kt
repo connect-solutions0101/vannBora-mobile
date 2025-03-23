@@ -1,4 +1,4 @@
-package com.example.mobilevan.telas
+package com.example.mobilevan.ui.screens
 
 import HomeTopBar
 import SearchBarPrev
@@ -15,12 +15,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mobilevan.componentes.CardAluno
+import com.example.mobilevan.ui.components.CardAluno
 import com.example.mobilevan.ui.theme.AmareloVann
 import com.example.mobilevan.ui.theme.AzulVann
 

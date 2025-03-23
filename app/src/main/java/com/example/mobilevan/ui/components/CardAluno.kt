@@ -1,4 +1,4 @@
-package com.example.mobilevan.componentes
+package com.example.mobilevan.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

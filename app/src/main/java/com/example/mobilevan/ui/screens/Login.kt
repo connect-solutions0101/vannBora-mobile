@@ -1,3 +1,5 @@
+package com.example.mobilevan.ui.screens
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,7 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.withStyle
 import com.example.mobilevan.R
 
-class MainActivity : ComponentActivity() {
+class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

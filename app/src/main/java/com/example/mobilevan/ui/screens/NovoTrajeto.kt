@@ -1,4 +1,4 @@
-package com.example.mobilevan.telas
+package com.example.mobilevan.ui.screens
 
 import HomeTopBar
 import android.os.Bundle
