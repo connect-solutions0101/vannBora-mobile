@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.theme
+package com.example.mobilevan.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,16 +17,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.withStyle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
+import com.example.mobilevan.ui.theme.AzulVann
+import HomeTopBar
 
 @Composable
-fun TrajetosVaziosScreen(nomeUsuario: String) {
+fun TrajetosVaziosScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFEFEFEF))
     ) {
-        TopBar(nomeUsuario)
+        HomeTopBar(
+            title = "Olá Roberto",
+            onNavigationIconClick = {navController.navigate("login")},
+            onActionIconClick = {},
+            containerColor = AzulVann,
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -79,7 +88,7 @@ fun TrajetosVaziosScreen(nomeUsuario: String) {
             contentAlignment = Alignment.Center
         ) {
             Button(
-                onClick = { /* TODO: Implementar ação */ },
+                onClick = { navController.navigate("novo_trajeto") }, // Navega para a tela de Novo Trajeto
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
@@ -120,7 +129,7 @@ fun TopBar(nomeUsuario: String) {
 
 
         Image(
-            painter = painterResource(R.drawable.person), // ⚠ Substitua pelo nome real do ícone
+            painter = painterResource(R.drawable.person),
             contentDescription = "Ícone do usuário",
             modifier = Modifier.size(40.dp)
         )
@@ -130,5 +139,6 @@ fun TopBar(nomeUsuario: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewTrajetosVaziosScreen() {
-    TrajetosVaziosScreen("Roberto")
+    TrajetosVaziosScreen(navController = rememberNavController())
 }
+

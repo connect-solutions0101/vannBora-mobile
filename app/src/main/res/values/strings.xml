@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">mobileVan</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
