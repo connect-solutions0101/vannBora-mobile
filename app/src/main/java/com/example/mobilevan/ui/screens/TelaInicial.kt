@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.theme
+package com.example.mobilevan.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.theme
+package com.example.mobilevan.ui.screens
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
