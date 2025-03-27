@@ -47,7 +47,7 @@ fun TrajetoScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            TopBar()
+            TopBar {}
 
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -102,7 +102,7 @@ fun TrajetoScreen() {
 }
 
 @Composable
-fun TopBar() {
+fun TopBar(onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

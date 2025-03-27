@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mobilevan.ui.screens.NovoTrajetoPrev
 import com.example.mobilevan.ui.theme.AzulVann
 
 class Main : ComponentActivity() {
@@ -28,7 +27,6 @@ class Main : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme {
-                NovoTrajetoPrev()
             }
         }
     }
