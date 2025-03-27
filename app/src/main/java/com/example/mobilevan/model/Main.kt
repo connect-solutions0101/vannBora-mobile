@@ -1,4 +1,4 @@
-package com.example.mobilevan.domain.model
+package com.example.mobilevan.model
 
-class test {
+class Main {
 }

@@ -1,4 +1,4 @@
-package com.example.mobilevan.data.repositories
+package com.example.mobilevan.data.repository
 
-class test {
+class Main {
 }
