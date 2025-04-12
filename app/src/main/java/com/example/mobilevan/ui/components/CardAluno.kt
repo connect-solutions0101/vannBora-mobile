@@ -1,14 +1,9 @@
 package com.example.mobilevan.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,15 +15,21 @@ import androidx.compose.ui.unit.sp
 import com.example.mobilevan.ui.theme.AzulVann
 
 @Composable
-fun CardAluno(modifier: Modifier = Modifier) {
+fun CardAluno(
+    nome: String,
+    escola: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = AzulVann,
             contentColor = Color.White,
         ),
         shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
+        modifier = modifier
             .size(width = 200.dp, height = 80.dp)
+            .clickable(onClick = onClick)
     ) {
         Column(
             modifier = Modifier
@@ -38,12 +39,12 @@ fun CardAluno(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Victor",
+                text = nome,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "SPTECH",
+                text = escola,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -54,5 +55,9 @@ fun CardAluno(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun CardAlunoPrev() {
-    CardAluno()
+    CardAluno(
+        nome = "Victor",
+        escola = "SPTECH",
+        onClick = {}
+    )
 }
