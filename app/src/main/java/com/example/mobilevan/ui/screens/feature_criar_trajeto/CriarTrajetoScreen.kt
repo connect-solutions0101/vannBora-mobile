@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens
+package com.example.mobilevan.ui.screens.feature_criar_trajeto
 
 import HomeTopBar
 import SearchBarPrev
