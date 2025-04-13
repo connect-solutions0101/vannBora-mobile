@@ -19,7 +19,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilevan.ui.components.CardAluno
 import com.example.mobilevan.ui.theme.AmareloVann
 import com.example.mobilevan.ui.theme.AzulVann
-import com.example.mobilevan.ui.screens.feature_criar_trajeto.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
