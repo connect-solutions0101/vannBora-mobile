@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            NavHost(navController = navController, startDestination = "login") {
+            NavHost(navController = navController, startDestination = Routes.Login.routes) {
                 composable(Routes.Login.routes) { TelaLogin(navController) }
                 composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
                 composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 fun PreviewNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "login") {
+    NavHost(navController = navController, startDestination = Routes.Login.routes) {
         composable(Routes.Login.routes) { TelaLogin(navController) }
         composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
         composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
