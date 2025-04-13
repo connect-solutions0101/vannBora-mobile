@@ -1,5 +1,3 @@
-package com.example.mobilevan.ui.navigation
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            NavHost(navController = navController, startDestination = Routes.Login.routes) {
+            NavHost(navController = navController, startDestination = "login") {
                 composable(Routes.Login.routes) { TelaLogin(navController) }
                 composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
                 composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
@@ -32,7 +30,7 @@ class MainActivity : ComponentActivity() {
 fun PreviewNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Routes.Login.routes) {
+    NavHost(navController = navController, startDestination = "login") {
         composable(Routes.Login.routes) { TelaLogin(navController) }
         composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
         composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
