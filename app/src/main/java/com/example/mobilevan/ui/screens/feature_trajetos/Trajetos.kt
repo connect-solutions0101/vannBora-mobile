@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens
+package com.example.mobilevan.ui.screens.feature_tela_inicial
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,18 +21,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import com.example.mobilevan.ui.theme.AzulVann
+import com.example.mobilevan.ui.theme.AmareloVann
+import com.example.mobilevan.ui.theme.CinzaVann
 import HomeTopBar
 
 @Composable
-fun TrajetosVaziosScreen(navController: NavHostController) {
+fun TrajetoScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEFEFEF))
+            .background(CinzaVann)
     ) {
         HomeTopBar(
             title = "Olá Roberto",
-            onNavigationIconClick = {navController.navigate("login")},
+            onNavigationIconClick = { navController.navigate("login") },
             onActionIconClick = {},
             containerColor = AzulVann,
         )
@@ -63,13 +65,13 @@ fun TrajetosVaziosScreen(navController: NavHostController) {
 
             Text(
                 text = buildAnnotatedString {
-                    withStyle(style = androidx.compose.ui.text.SpanStyle(color = Color.Blue, fontWeight = FontWeight.Bold)) {
+                    withStyle(style = androidx.compose.ui.text.SpanStyle(color = AzulVann, fontWeight = FontWeight.Bold)) {
                         append("Vannbora")
                     }
                     withStyle(style = androidx.compose.ui.text.SpanStyle(fontWeight = FontWeight.Bold)) {
                         append(" criar um\n")
                     }
-                    withStyle(style = androidx.compose.ui.text.SpanStyle(color = Color.Blue, fontWeight = FontWeight.Bold)) {
+                    withStyle(style = androidx.compose.ui.text.SpanStyle(color = AzulVann, fontWeight = FontWeight.Bold)) {
                         append("Trajeto?")
                     }
                 },
@@ -88,8 +90,8 @@ fun TrajetosVaziosScreen(navController: NavHostController) {
             contentAlignment = Alignment.Center
         ) {
             Button(
-                onClick = { navController.navigate("novo_trajeto") }, // Navega para a tela de Novo Trajeto
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
+                onClick = { navController.navigate("novo_trajeto") },
+                colors = ButtonDefaults.buttonColors(backgroundColor = AmareloVann),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .height(50.dp)
@@ -106,39 +108,8 @@ fun TrajetosVaziosScreen(navController: NavHostController) {
     }
 }
 
-@Composable
-fun TopBar(nomeUsuario: String) {
-    Row(
-        modifier = Modifier
-            .width(412.dp)
-            .height(90.dp)
-            .background(
-                color = Color(0xFF001F3F),
-                shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp) // 🔥 Agora só arredonda embaixo!
-            )
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = "Olá, $nomeUsuario",
-            color = Color.White,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-
-
-        Image(
-            painter = painterResource(R.drawable.person),
-            contentDescription = "Ícone do usuário",
-            modifier = Modifier.size(40.dp)
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
-fun PreviewTrajetosVaziosScreen() {
-    TrajetosVaziosScreen(navController = rememberNavController())
+fun PreviewTrajetoScreen() {
+    TrajetoScreen(navController = rememberNavController())
 }
-

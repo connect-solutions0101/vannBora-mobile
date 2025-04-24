@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens
+package com.example.mobilevan.ui.screens.feature_selecionar_trajeto
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,18 +20,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 
-class selecionarTrajetoActivity : ComponentActivity() {
+class SelecionarTrajetoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TrajetoScreen()
+            SelecionarTrajetoScreen()
         }
     }
 }
 
 @Composable
-fun TrajetoScreen() {
-    val trajetos = List(4) { "Trajeto 1\nManhã\n28 Alunos" }
+fun SelecionarTrajetoScreen() {
+    val trajetos = List(4) { "Trajeto ${it + 1}\nManhã\n28 Alunos" }
     var selectedTrajeto by remember { mutableStateOf(-1) }
 
     Box(
@@ -43,39 +43,33 @@ fun TrajetoScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 53.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(bottom = 60.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopBar {}
+            TopBar()
 
+            Spacer(modifier = Modifier.height(32.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "Selecione um",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "trajeto",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF0D21A1)
+            )
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Selecione um",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "trajeto",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF0D21A1)
-                )
-            }
-
-
-            Spacer(modifier = Modifier.height(20.dp))
-
+            Spacer(modifier = Modifier.height(24.dp))
 
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .weight(1f) // Preenche o espaço restante da tela
+                    .weight(1f)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 trajetos.forEachIndexed { index, trajeto ->
                     TrajetoCard(trajeto, index == selectedTrajeto) {
@@ -85,14 +79,12 @@ fun TrajetoScreen() {
             }
         }
 
-
         Button(
-            onClick = { /* TODO: Adicionar novo trajeto */ },
+            onClick = { /* TODO: Implementar ação */ },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(16.dp)
                 .width(225.dp)
                 .height(55.dp)
         ) {
@@ -102,7 +94,7 @@ fun TrajetoScreen() {
 }
 
 @Composable
-fun TopBar(onClick: () -> Unit) {
+fun TopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,10 +103,15 @@ fun TopBar(onClick: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = { /* TODO: Navegar */ }) {
+        IconButton(onClick = { /* TODO: Home */ }) {
             Icon(imageVector = Icons.Filled.Home, contentDescription = "Home", tint = Color.White)
         }
-        Text(text = "Olá, Roberto", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(
+            text = "Olá, Roberto",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
         IconButton(onClick = { /* TODO: Perfil */ }) {
             Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Perfil", tint = Color.White)
         }
@@ -125,25 +122,32 @@ fun TopBar(onClick: () -> Unit) {
 fun TrajetoCard(trajeto: String, isSelected: Boolean, onClick: () -> Unit) {
     Row(
         modifier = Modifier
-            .width(308.dp)  // Define a largura para 308 dp
-            .height(94.dp)  // Define a altura para 94 dp
-            .padding(vertical = 8.dp)
+            .width(308.dp)
+            .height(94.dp)
             .background(Color(0xFF001F4D), shape = RoundedCornerShape(8.dp))
             .clickable { onClick() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = trajeto, color = Color.White, modifier = Modifier.weight(1f))
+        Text(
+            text = trajeto,
+            color = Color.White,
+            modifier = Modifier.weight(1f)
+        )
         Checkbox(
             checked = isSelected,
             onCheckedChange = { onClick() },
-            colors = CheckboxDefaults.colors(checkedColor = Color.White, checkmarkColor = Color.White, uncheckedColor = Color.White)
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color.White,
+                checkmarkColor = Color.Black,
+                uncheckedColor = Color.White
+            )
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewTrajetoScreen() {
-    TrajetoScreen()
+fun PreviewSelecionarTrajetoScreen() {
+    SelecionarTrajetoScreen()
 }
