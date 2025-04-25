@@ -1,5 +1,6 @@
-package com.example.mobilevan.ui.screens
+package com.example.mobilevan.ui.screens.feature_login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -19,17 +21,21 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun TelaLogin(navController: NavHostController) {
-    var email by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
-
+fun TelaLogin(
+    navController: NavHostController,
+    viewModel: MainViewModel = viewModel()
+) {
     val shape = RoundedCornerShape(16.dp)
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -78,8 +84,10 @@ fun TelaLogin(navController: NavHostController) {
         Spacer(modifier = Modifier.height(96.dp))
 
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = viewModel.email,
+            onValueChange = {
+                viewModel.email = it
+            },
             label = { Text("E-mail") },
             modifier = Modifier
                 .width(290.dp)
@@ -91,8 +99,10 @@ fun TelaLogin(navController: NavHostController) {
         Spacer(modifier = Modifier.height(66.dp))
 
         OutlinedTextField(
-            value = senha,
-            onValueChange = { senha = it },
+            value = viewModel.password,
+            onValueChange = {
+                viewModel.password = it
+            },
             label = { Text("Senha") },
             modifier = Modifier
                 .width(290.dp)
@@ -105,7 +115,14 @@ fun TelaLogin(navController: NavHostController) {
 
         Button(
             onClick = {
-                navController.navigate("tela_inicial")
+                scope.launch {
+                    val success = viewModel.onLoginClick(context)
+                    if (success) {
+                        navController.navigate("tela_inicial")
+                    } else {
+                        Toast.makeText(context, "Credenciais incorretas", Toast.LENGTH_SHORT).show()
+                    }
+                }
             },
             modifier = Modifier
                 .width(290.dp)
