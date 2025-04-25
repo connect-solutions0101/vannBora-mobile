@@ -1,5 +1,3 @@
-package com.example.mobilevan.ui.navigation
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.*
 import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.screens.NovoTrajeto
-import com.example.mobilevan.ui.screens.TelaLogin
+import com.example.mobilevan.ui.screens.feature_login.TelaLogin
 import com.example.mobilevan.ui.screens.TrajetosVaziosScreen
 
 class MainActivity : ComponentActivity() {

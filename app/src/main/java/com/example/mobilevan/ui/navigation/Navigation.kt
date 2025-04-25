@@ -1,11 +1,10 @@
 package com.example.mobilevan.ui.navigation
-
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.ui.screens.NovoTrajeto
-import com.example.mobilevan.ui.screens.TelaLogin
+import com.example.mobilevan.ui.screens.feature_login.TelaLogin
 import com.example.mobilevan.ui.screens.TrajetosVaziosScreen
 
 @Composable
