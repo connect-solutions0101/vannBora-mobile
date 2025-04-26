@@ -8,7 +8,7 @@ import androidx.navigation.compose.*
 import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.screens.NovoTrajeto
 import com.example.mobilevan.ui.screens.feature_login.TelaLogin
-import com.example.mobilevan.ui.screens.TrajetosVaziosScreen
+import com.example.mobilevan.ui.screens.feature_selecionar_trajeto.TrajetoScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
 
             NavHost(navController = navController, startDestination = "login") {
                 composable(Routes.Login.routes) { TelaLogin(navController) }
-                composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
+                composable(Routes.TelaInicial.routes) { TrajetoScreen(navController) }
                 composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
             }
         }
@@ -32,7 +32,7 @@ fun PreviewNavigation() {
 
     NavHost(navController = navController, startDestination = "login") {
         composable(Routes.Login.routes) { TelaLogin(navController) }
-        composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
+        composable(Routes.TelaInicial.routes) { TrajetoScreen(navController) }
         composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
     }
 }
