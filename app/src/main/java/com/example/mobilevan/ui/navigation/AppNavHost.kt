@@ -8,7 +8,9 @@ import androidx.navigation.compose.*
 import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.screens.NovoTrajeto
 import com.example.mobilevan.ui.screens.TelaLogin
-import com.example.mobilevan.ui.screens.TrajetosVaziosScreen
+import com.example.mobilevan.ui.screens.TrajetoScreen
+import com.example.mobilevan.ui.screens.TrajetoAlunoScreen
+import com.example.mobilevan.ui.screens.feature_clima.ClimaScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,10 +19,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            NavHost(navController = navController, startDestination = "login") {
-                composable(Routes.Login.routes) { TelaLogin(navController) }
-                composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
-                composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
+            NavHost(navController = navController, startDestination = Routes.Login.toString()) {
+                composable(Routes.Login.toString()) { TelaLogin(navController) }
+                composable(Routes.NovoTrajeto.toString()) { NovoTrajeto(navController) }
+                composable(Routes.SelecionarTrajeto.toString()) { TrajetoScreen(navController) }
+                composable(Routes.Trajetos.toString()) { TrajetoAlunoScreen(navController)}
+                composable(Routes.ClimaScreen.toString()) { ClimaScreen(navController) }
             }
         }
     }
@@ -31,8 +35,10 @@ fun PreviewNavigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "login") {
-        composable(Routes.Login.routes) { TelaLogin(navController) }
-        composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
-        composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
+        composable(Routes.Login.toString()) { TelaLogin(navController) }
+        composable(Routes.NovoTrajeto.toString()) { NovoTrajeto(navController) }
+        composable(Routes.SelecionarTrajeto.toString()) { TrajetoScreen(navController) }
+        composable(Routes.Trajetos.toString()) { TrajetoAlunoScreen(navController)}
+        composable(Routes.ClimaScreen.toString()) { ClimaScreen(navController)}
     }
 }

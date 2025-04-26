@@ -5,15 +5,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.ui.screens.NovoTrajeto
 import com.example.mobilevan.ui.screens.TelaLogin
-import com.example.mobilevan.ui.screens.TrajetosVaziosScreen
+import com.example.mobilevan.ui.screens.TrajetoAlunoScreen
+import com.example.mobilevan.ui.screens.TrajetoScreen
+import com.example.mobilevan.ui.screens.feature_clima.ClimaScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Routes.Login.routes) {
-        composable(Routes.Login.routes) { TelaLogin(navController) }
-        composable(Routes.TelaInicial.routes) { TrajetosVaziosScreen(navController) }
-        composable(Routes.NovoTrajeto.routes) { NovoTrajeto(navController) }
+    NavHost(navController = navController, startDestination = Routes.Login) {
+        composable(Routes.Login.toString()) { TelaLogin(navController) }
+        composable(Routes.NovoTrajeto.toString()) { NovoTrajeto(navController) }
+        composable(Routes.SelecionarTrajeto.toString()) { TrajetoScreen(navController) }
+        composable(Routes.Trajetos.toString()) { TrajetoAlunoScreen(navController)}
+        composable(Routes.ClimaScreen.toString()) { ClimaScreen(navController)}
     }
 }
