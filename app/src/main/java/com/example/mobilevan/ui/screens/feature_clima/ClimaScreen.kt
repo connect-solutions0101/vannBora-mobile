@@ -4,13 +4,9 @@ import HomeTopBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,9 +19,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import com.example.mobilevan.ui.theme.AzulVann
+import com.example.mobilevan.ui.viewmodel.WeatherViewModel
 
 @Composable
-fun ClimaScreen(navController: NavHostController) {
+fun ClimaScreen(
+    navController: NavHostController,
+    viewModel: WeatherViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+
+    val weather = viewModel.weather.value
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchWeather()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,11 +55,20 @@ fun ClimaScreen(navController: NavHostController) {
         ) {
             Column {
 
-                Text( modifier = Modifier.align(Alignment.CenterHorizontally), text = "São Paulo", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                Text(
+                    text = weather?.results?.city ?: "Carregando...",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("23°", fontSize = 36.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "${weather?.results?.temp ?: "--"}°",
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                     Column {
                         Text("Quinta-feira", fontSize = 14.sp)
@@ -86,11 +102,17 @@ fun ClimaScreen(navController: NavHostController) {
                 .background(Color(0xFFDCEAFF), RoundedCornerShape(16.dp))
                 .padding(16.dp)
         ) {
-            Text("Próximos 4 dias", fontWeight = FontWeight.SemiBold)
+            Text("Próximos 3 dias", fontWeight = FontWeight.SemiBold)
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            DiaClimaItem("Sexta, 18 jan", "☀", "27°C")
+            weather?.results?.forecast?.take(4)?.forEach { forecast ->
+                DiaClimaItem(
+                    dia = "${forecast.weekday}, ${forecast.date}",
+                    icone = climaEmoji(forecast.description),
+                    temp = "${forecast.max}°C"
+                )
+            }
             DiaClimaItem("Sábado, 19 jan", "🌧", "23°C")
             DiaClimaItem("Domingo, 20 jan", "🌧", "19°C")
             DiaClimaItem("Segunda, 21 jan", "🌦", "21°C")
@@ -144,6 +166,16 @@ fun DiaClimaItem(dia: String, icone: String, temp: String) {
             Spacer(modifier = Modifier.width(8.dp))
             Text(temp, color = Color.White)
         }
+    }
+}
+
+fun climaEmoji(description: String): String {
+    return when {
+        description.contains("sol", ignoreCase = true) -> "☀"
+        description.contains("nublado", ignoreCase = true) -> "☁"
+        description.contains("chuva", ignoreCase = true) -> "🌧"
+        description.contains("limpo", ignoreCase = true) -> "🌤"
+        else -> "⛅"
     }
 }
 

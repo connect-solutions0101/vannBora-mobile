@@ -3,11 +3,21 @@ package com.example.mobilevan.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Routes(val routes: String){
+sealed class Routes{
 
-    object Login : Routes("login")
+    @Serializable
+    data object Login : Routes()
 
-    object TelaInicial : Routes("tela_inicial")
+    @Serializable
+    data object SelecionarTrajeto : Routes()
 
-    object NovoTrajeto : Routes("novo_trajeto")
+    @Serializable
+    data object NovoTrajeto : Routes()
+
+    @Serializable
+    data object Trajetos : Routes()
+
+    @Serializable
+    data object ClimaScreen : Routes()
+
 }
