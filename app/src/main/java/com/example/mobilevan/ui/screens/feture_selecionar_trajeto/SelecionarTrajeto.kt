@@ -34,21 +34,19 @@ fun SelecionarTrajetoScreen() {
     val trajetos = List(4) { "Trajeto ${it + 1}\nManhã\n28 Alunos" }
     var selectedTrajeto by remember { mutableStateOf(-1) }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
-            .padding(16.dp)
-    ) {
+    Scaffold(
+        topBar = { TopBar() },
+        backgroundColor = Color(0xFFF5F5F5),
+        bottomBar = { BottomButton() }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 60.dp),
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopBar()
-
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = "Selecione um",
@@ -78,42 +76,57 @@ fun SelecionarTrajetoScreen() {
                 }
             }
         }
-
-        Button(
-            onClick = { /* TODO: Implementar ação */ },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .width(225.dp)
-                .height(55.dp)
-        ) {
-            Text(text = "+ Novo Trajeto", color = Color.Black, fontSize = 16.sp)
-        }
     }
 }
 
 @Composable
 fun TopBar() {
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF001F4D), shape = RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp))
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            .height(75.dp) // A altura foi ajustada para 75 dp
+            .background(Color(0xFF001F4D), shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)) // Pontas arredondadas
     ) {
-        IconButton(onClick = { /* TODO: Home */ }) {
-            Icon(imageVector = Icons.Filled.Home, contentDescription = "Home", tint = Color.White)
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { /* TODO: Home */ }) {
+                Icon(imageVector = Icons.Filled.Home, contentDescription = "Home", tint = Color.White)
+            }
+            Text(
+                text = "Olá, Roberto",
+                fontSize = 18.sp, // Ajustei o tamanho da fonte para um tamanho mais proporcional
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            IconButton(onClick = { /* TODO: Perfil */ }) {
+                Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Perfil", tint = Color.White)
+            }
         }
-        Text(
-            text = "Olá, Roberto",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        IconButton(onClick = { /* TODO: Perfil */ }) {
-            Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Perfil", tint = Color.White)
+    }
+}
+
+@Composable
+fun BottomButton() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = { /* TODO: Implementar ação */ },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFFC107)),
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier
+                .width(225.dp)
+                .height(55.dp)
+        ) {
+            Text(text = "+ Novo Trajeto", color = Color.Black, fontSize = 16.sp)
         }
     }
 }
@@ -126,12 +139,13 @@ fun TrajetoCard(trajeto: String, isSelected: Boolean, onClick: () -> Unit) {
             .height(94.dp)
             .background(Color(0xFF001F4D), shape = RoundedCornerShape(8.dp))
             .clickable { onClick() }
-            .padding(16.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = trajeto,
             color = Color.White,
+            fontSize = 16.sp,
             modifier = Modifier.weight(1f)
         )
         Checkbox(

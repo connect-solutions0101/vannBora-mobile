@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens
+package com.example.mobilevan.ui.screens.feature_novo_trajeto
 
 import HomeTopBar
 import androidx.compose.foundation.layout.*
@@ -41,11 +41,9 @@ fun NovoTrajeto(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 24.dp),
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
-
             Card(
                 colors = CardDefaults.cardColors(containerColor = AzulVann),
                 shape = RoundedCornerShape(16.dp),
