@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.ui.navigation.Routes
-import com.example.mobilevan.ui.screens.NovoTrajeto
+import com.example.mobilevan.ui.screens.feature_novo_trajeto.NovoTrajeto
 import com.example.mobilevan.ui.screens.feature_selecionar_trajeto.TrajetoScreen
 import com.example.mobilevan.ui.screens.feature_clima.ClimaScreen
 import com.example.mobilevan.ui.screens.feature_login.TelaLogin

@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens
+package com.example.mobilevan.ui.screens.feature_novo_trajeto
 
 import HomeTopBar
 import androidx.compose.foundation.layout.*
@@ -25,34 +25,58 @@ fun NovoTrajeto(navController: NavHostController) {
     var nomeTrajeto by remember { mutableStateOf("") }
     var periodoTrajeto by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
-        HomeTopBar(
-            title = "Olá Roberto",
-            onNavigationIconClick = {navController.navigate("tela_inicial")},
-            onActionIconClick = {},
-            containerColor = AzulVann,
-        )
-
-        Column(modifier = Modifier.fillMaxSize().padding(horizontal = 56.dp, vertical = 0.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    Scaffold(
+        topBar = {
+            HomeTopBar(
+                title = "Olá Roberto",
+                onNavigationIconClick = { navController.navigate("tela_inicial") },
+                onActionIconClick = {},
+                containerColor = AzulVann,
+            )
+        },
+        containerColor = Color.White
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = AzulVann),
-                modifier = Modifier.size(width = 300.dp, height = 329.dp)
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(360.dp)
             ) {
-                Column(modifier = Modifier.fillMaxSize().padding(horizontal = 50.dp, vertical = 25.dp), verticalArrangement = Arrangement.spacedBy(13.dp, Alignment.CenterVertically)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
                         text = "Novo Trajeto",
                         color = Color.White,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
+
                     Text(
                         text = "Nome do Trajeto",
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
+
                     SuggestionChip(
-                        colors = SuggestionChipDefaults.suggestionChipColors(containerColor = CinzaVann, labelColor = AzulVann),
+                        colors = SuggestionChipDefaults.suggestionChipColors(
+                            containerColor = CinzaVann,
+                            labelColor = AzulVann
+                        ),
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {},
@@ -64,14 +88,19 @@ fun NovoTrajeto(navController: NavHostController) {
                             )
                         }
                     )
+
                     Text(
-                        text = "Perido do Trajeto",
+                        text = "Período do Trajeto",
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
+
                     SuggestionChip(
-                        colors = SuggestionChipDefaults.suggestionChipColors(containerColor = CinzaVann, labelColor = AzulVann),
+                        colors = SuggestionChipDefaults.suggestionChipColors(
+                            containerColor = CinzaVann,
+                            labelColor = AzulVann
+                        ),
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {},
@@ -83,8 +112,14 @@ fun NovoTrajeto(navController: NavHostController) {
                             )
                         }
                     )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     Button(
-                        colors = ButtonDefaults.buttonColors(containerColor = AmareloVann, contentColor = Color.Black),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = AmareloVann,
+                            contentColor = Color.Black
+                        ),
                         shape = RoundedCornerShape(15.dp),
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {}
@@ -102,4 +137,3 @@ fun NovoTrajeto(navController: NavHostController) {
 fun PreviewNovoTrajeto() {
     NovoTrajeto(navController = rememberNavController())
 }
-

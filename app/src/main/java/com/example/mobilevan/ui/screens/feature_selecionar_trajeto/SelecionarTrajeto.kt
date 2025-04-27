@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -57,19 +58,44 @@ fun TrajetoScreen(
         viewModel.onScreenLoad(context)
     }
 
-    Column (
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
-    ) {
-        HomeTopBar(
-            title = "Olá Roberto",
-            onNavigationIconClick = {navController.navigate("login")},
-            onActionIconClick = {},
-            containerColor = AzulVann,
-        )
+    Scaffold(
+        topBar = {
+            HomeTopBar(
+                title = "Olá Roberto",
+                onNavigationIconClick = {navController.navigate("login")},
+                onActionIconClick = {},
+                containerColor = AzulVann,
+            ) },
+        modifier = Modifier.background(Color(0xFFF5F5F5)),
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = { /* TODO: Adicionar novo trajeto */ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFC107),
+                        contentColor = Color.Black,
+                    ),
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .width(225.dp)
+                        .height(55.dp)
+                ) {
+                    Text(text = "+ Novo Trajeto", color = Color.Black, fontSize = 16.sp)
+                }
+            }
+
+        }
+    ){ innerPadding ->
         Column(
             modifier = Modifier
+                .padding(innerPadding)
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,21 +108,6 @@ fun TrajetoScreen(
                     selectedTrajeto = index
                 }
             }
-        }
-        Button(
-            onClick = { /* TODO: Adicionar novo trajeto */ },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFFFC107),
-                contentColor = Color.Black,
-            ),
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .padding(16.dp)
-                .width(225.dp)
-                .height(55.dp)
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Text(text = "+ Novo Trajeto", color = Color.Black, fontSize = 16.sp)
         }
     }
 }
