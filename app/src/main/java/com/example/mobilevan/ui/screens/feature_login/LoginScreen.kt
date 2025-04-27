@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import kotlinx.coroutines.launch
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 
 @Composable
@@ -40,7 +41,8 @@ fun TelaLogin(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .imePadding(),  // Ajusta a tela quando o teclado aparece
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -90,8 +92,8 @@ fun TelaLogin(
             },
             label = { Text("E-mail") },
             modifier = Modifier
-                .width(290.dp)
-                .height(50.dp),
+                .fillMaxWidth()  // Preenche toda a largura disponível
+                .wrapContentHeight(),  // Ajusta a altura automaticamente
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             shape = shape
         )
@@ -105,10 +107,11 @@ fun TelaLogin(
             },
             label = { Text("Senha") },
             modifier = Modifier
-                .width(290.dp)
-                .height(50.dp),
+                .fillMaxWidth()
+                .wrapContentHeight(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            shape = shape
+            shape = shape,
+            visualTransformation = PasswordVisualTransformation()  // Esconde os caracteres com asteriscos
         )
 
         Spacer(modifier = Modifier.height(66.dp))
@@ -125,7 +128,7 @@ fun TelaLogin(
                 }
             },
             modifier = Modifier
-                .width(290.dp)
+                .fillMaxWidth()  // Preenche toda a largura disponível
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
             shape = shape
@@ -156,4 +159,3 @@ fun TelaLogin(
 fun PreviewTelaLogin() {
     TelaLogin(navController = rememberNavController())
 }
-
