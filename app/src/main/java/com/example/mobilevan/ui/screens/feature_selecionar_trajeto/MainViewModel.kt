@@ -14,14 +14,7 @@ import kotlinx.coroutines.flow.firstOrNull
 
 class MainViewModel: ViewModel() {
 
-    var trajetos by mutableStateOf<List<TrajetoDTO>>(
-        TrajetoDTO(
-            id = 0,
-            nome = "dsdgdsG",
-            periodo = Periodo.MANHA,
-            trajetoDependentes = emptyList()
-        ).let { listOf(it) }
-    )
+    var trajetos by mutableStateOf<List<TrajetoDTO>>(emptyList())
 
     suspend fun onScreenLoad(context: Context) {
         println("Screen loaded")
@@ -34,19 +27,18 @@ class MainViewModel: ViewModel() {
             return
         }
 
-        println("Token: $token")
-        println("User ID: $userId")
-
         try {
             val response =  api.getTrajetos(userId, "Bearer $token")
 
-            if (!response.isSuccessful || response.raw(). code == 204) {
+            if (response.raw().code == 200) {
                 response.body()?.let { trajetos ->
                     println("Trajetos: $trajetos")
                     this.trajetos = trajetos
                 }
+            } else if (response.raw().code == 204){
+                println("No content")
             } else {
-                println("Error fetching trajetos: ${response.errorBody()}")
+                println("Error: ${response.raw().code}")
             }
         } catch (e: Exception) {
             e.printStackTrace()
