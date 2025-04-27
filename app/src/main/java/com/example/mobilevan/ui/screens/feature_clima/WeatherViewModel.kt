@@ -1,12 +1,12 @@
-package com.example.mobilevan.ui.viewmodel
+package com.example.mobilevan.ui.screens.feature_clima
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobilevan.data.model.WeatherResponse
-import com.example.mobilevan.data.remote.RetrofitInstance
+import com.example.mobilevan.service.dto.WeatherResponse
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
+import com.example.mobilevan.config.RetrofitConfigHgbr
 
 class WeatherViewModel : ViewModel() {
 
@@ -16,7 +16,7 @@ class WeatherViewModel : ViewModel() {
     fun fetchWeather() {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getWeather()
+                val response = RetrofitConfigHgbr.api.getWeather()
                 _weather.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
