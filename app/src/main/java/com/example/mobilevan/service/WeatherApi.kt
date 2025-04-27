@@ -1,6 +1,6 @@
-package com.example.mobilevan.data.remote
+package com.example.mobilevan.service
 
-import com.example.mobilevan.data.model.WeatherResponse
+import com.example.mobilevan.service.dto.WeatherResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

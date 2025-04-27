@@ -19,7 +19,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import com.example.mobilevan.ui.theme.AzulVann
-import com.example.mobilevan.ui.viewmodel.WeatherViewModel
 
 @Composable
 fun ClimaScreen(
