@@ -1,5 +1,6 @@
 package com.example.mobilevan.ui.screens.feature_login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -33,6 +35,7 @@ fun TelaLogin(
 ) {
     val shape = RoundedCornerShape(16.dp)
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -112,7 +115,14 @@ fun TelaLogin(
 
         Button(
             onClick = {
-                viewModel.onLoginClick(context)
+                scope.launch {
+                    val success = viewModel.onLoginClick(context)
+                    if (success) {
+                        navController.navigate("tela_inicial")
+                    } else {
+                        Toast.makeText(context, "Credenciais incorretas", Toast.LENGTH_SHORT).show()
+                    }
+                }
             },
             modifier = Modifier
                 .width(290.dp)

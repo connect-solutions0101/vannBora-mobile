@@ -5,12 +5,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.mobilevan.config.RetrofitConfig
 import com.example.mobilevan.service.AuthService
 import com.example.mobilevan.service.request.LoginRequest
 import com.example.mobilevan.store.TokenStore
-import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -18,41 +16,36 @@ class MainViewModel : ViewModel() {
 
     var password by mutableStateOf("")
 
-    fun onLoginClick(context: Context){
-        System.out.println("Login Clicked")
-        System.out.println("Email: $email")
-        System.out.println("Password: $password")
-
-        login(context)
+    suspend fun onLoginClick(context: Context): Boolean {
+        val success = login(context)
+        if (success) {
+            println("Login concluído com sucesso!")
+            val token = TokenStore.getToken(context)
+            println("Token: $token")
+        } else {
+            println("Falha no login.")
+        }
+        return success
     }
 
-    fun login(context: Context) = viewModelScope.launch {
-        val authApi = RetrofitConfig
-            .instance
-            .create(AuthService::class.java)
+    private suspend fun login(context: Context): Boolean {
+        val authApi = RetrofitConfig.instance.create(AuthService::class.java)
 
-        val request = LoginRequest(
-            email = email,
-            password = password
-        )
+        val request = LoginRequest(email, password)
 
-        try{
+        return try {
             val response = authApi.login(request)
-
-            System.out.println("Response: $response")
-            System.out.println("Body: ${response.body()}")
-
-            if(response.isSuccessful){
-                val loginDTO = response.body()
-                System.out.println("Login realizado com sucesso!")
-                System.out.println("Token: ${loginDTO?.token}")
-                TokenStore.saveToken(context, response.body()!!.token)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    TokenStore.saveToken(context, it.token, it.id)
+                    println("Login realizado")
+                    return true
+                }
             }
-
-        } catch (e: Exception){
+            false
+        } catch (e: Exception) {
             e.printStackTrace()
+            false
         }
     }
-
-
 }
