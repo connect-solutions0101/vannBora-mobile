@@ -37,7 +37,7 @@ class MainViewModel : ViewModel() {
             val response = authApi.login(request)
             if (response.isSuccessful) {
                 response.body()?.let {
-                    TokenStore.saveToken(context, it.token)
+                    TokenStore.saveToken(context, it.token, it.id)
                     println("Login realizado")
                     return true
                 }
