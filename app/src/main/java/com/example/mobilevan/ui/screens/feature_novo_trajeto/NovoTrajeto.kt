@@ -24,6 +24,7 @@ import com.example.mobilevan.ui.theme.CinzaVann
 fun NovoTrajeto(navController: NavHostController) {
     var nomeTrajeto by remember { mutableStateOf("") }
     var periodoTrajeto by remember { mutableStateOf("") }
+    var nome by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -49,7 +50,7 @@ fun NovoTrajeto(navController: NavHostController) {
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(360.dp)
+                    .height(420.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -71,46 +72,40 @@ fun NovoTrajeto(navController: NavHostController) {
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-
-                    SuggestionChip(
-                        colors = SuggestionChipDefaults.suggestionChipColors(
-                            containerColor = CinzaVann,
-                            labelColor = AzulVann
-                        ),
+                    OutlinedTextField(
+                        value = nome,
+                        onValueChange = { nome = it },
+                        label = { Text("Insira o nome") },
                         shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = {},
-                        label = {
-                            Text(
-                                text = "Insira o nome",
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            containerColor = CinzaVann,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent
+                        ),
+                        textStyle = androidx.compose.ui.text.TextStyle(textAlign = TextAlign.Center),
+                        modifier = Modifier
+                            .fillMaxWidth()
                     )
 
                     Text(
                         text = "Período do Trajeto",
                         color = Color.White,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 4.dp)
                     )
-
-                    SuggestionChip(
-                        colors = SuggestionChipDefaults.suggestionChipColors(
-                            containerColor = CinzaVann,
-                            labelColor = AzulVann
-                        ),
+                    OutlinedTextField(
+                        value = periodoTrajeto,
+                        onValueChange = { periodoTrajeto = it },
+                        label = { Text("Manhã, tarde, noite...") },
                         shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = {},
-                        label = {
-                            Text(
-                                text = "Manhã, tarde, noite...",
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            containerColor = CinzaVann,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent
+                        ),
+                        textStyle = androidx.compose.ui.text.TextStyle(textAlign = TextAlign.Center),
+                        modifier = Modifier.fillMaxWidth()
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
