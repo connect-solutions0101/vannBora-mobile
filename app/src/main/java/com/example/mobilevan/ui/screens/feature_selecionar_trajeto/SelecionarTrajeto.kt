@@ -16,22 +16,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,20 +38,35 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.service.dto.TrajetoDTO
+import com.example.mobilevan.ui.components.ModalSelecionarTrajeto
+import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
 
 @Composable
-fun TrajetoScreen(
+fun SelecionarTrajeto(
     navController: NavHostController,
     viewModel: MainViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    var selectedTrajeto by remember { mutableStateOf(-1) }
 
     LaunchedEffect(Unit) {
-        Log.d("TrajetoScreen", "Componente iniciado")
         viewModel.onScreenLoad(context)
     }
+
+    ModalSelecionarTrajeto(
+        showDialog = viewModel.showTrajetoDialog,
+        onDismiss = { },
+        title = "O que deseja fazer?",
+        labelButton1 = "Iniciar",
+        onSelecionarOpcao1 = {
+            viewModel.showTrajetoDialog = false
+            viewModel.trajetoSelecionado?.id?.let {
+                navController.navigate("Trajeto/$it")
+            }
+        },
+        labelButton2 = "Editar",
+        onSelecionarOpcao2 = { }
+    )
 
     Scaffold(
         topBar = {
@@ -76,7 +86,9 @@ fun TrajetoScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
-                    onClick = { /* TODO: Adicionar novo trajeto */ },
+                    onClick = {
+                        navController.navigate(Routes.NovoTrajeto.route)
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFC107),
                         contentColor = Color.Black,
@@ -104,8 +116,8 @@ fun TrajetoScreen(
             if(viewModel.trajetos.isEmpty()) {
                 CoreListagemVaziaTrajetos()
             } else {
-                CoreListagemTrajetos(viewModel.trajetos, selectedTrajeto) { index ->
-                    selectedTrajeto = index
+                CoreListagemTrajetos(viewModel.trajetos) { index ->
+                    viewModel.onTrajetoClick(viewModel.trajetos[index])
                 }
             }
         }
@@ -130,18 +142,18 @@ fun CoreListagemVaziaTrajetos() {
     Text(
         text = buildAnnotatedString {
             withStyle(
-                style = androidx.compose.ui.text.SpanStyle(
+                style = SpanStyle(
                     color = AzulVann,
                     fontWeight = FontWeight.Bold
                 )
             ) {
                 append("Vannbora")
             }
-            withStyle(style = androidx.compose.ui.text.SpanStyle(fontWeight = FontWeight.Bold)) {
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                 append(" criar um\n")
             }
             withStyle(
-                style = androidx.compose.ui.text.SpanStyle(
+                style = SpanStyle(
                     color = AzulVann,
                     fontWeight = FontWeight.Bold
                 )
@@ -160,7 +172,6 @@ fun CoreListagemVaziaTrajetos() {
 @Composable
 fun CoreListagemTrajetos(
     trajetos: List<TrajetoDTO>,
-    selectedTrajeto: Int,
     onTrajetoSelected: (Int) -> Unit
 ) {
     Spacer(modifier = Modifier.height(20.dp))
@@ -191,7 +202,7 @@ fun CoreListagemTrajetos(
             .padding(bottom = 40.dp)
     ) {
         items(trajetos.size) { index ->
-            TrajetoCard(trajetos[index], index == selectedTrajeto) {
+            TrajetoCard(trajetos[index]) {
                 onTrajetoSelected(index)
             }
         }
@@ -199,7 +210,7 @@ fun CoreListagemTrajetos(
 }
 
 @Composable
-fun TrajetoCard(trajeto: TrajetoDTO, isSelected: Boolean, onClick: () -> Unit) {
+fun TrajetoCard(trajeto: TrajetoDTO, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .width(308.dp)
@@ -227,16 +238,11 @@ fun TrajetoCard(trajeto: TrajetoDTO, isSelected: Boolean, onClick: () -> Unit) {
                 fontSize = 16.sp
             )
         }
-        Checkbox(
-            checked = isSelected,
-            onCheckedChange = { onClick() },
-            colors = CheckboxDefaults.colors(checkedColor = Color.White, checkmarkColor = Color.White, uncheckedColor = Color.White)
-        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewTrajetoScreen() {
-    TrajetoScreen(navController = rememberNavController())
+    SelecionarTrajeto(navController = rememberNavController())
 }
