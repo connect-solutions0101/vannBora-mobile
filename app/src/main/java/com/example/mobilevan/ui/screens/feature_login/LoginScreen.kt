@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import kotlinx.coroutines.launch
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.example.mobilevan.ui.navigation.Routes
 
 
 @Composable
@@ -121,7 +122,7 @@ fun TelaLogin(
                 scope.launch {
                     val success = viewModel.onLoginClick(context)
                     if (success) {
-                        navController.navigate("tela_inicial")
+                        navController.navigate(Routes.SelecionarTrajeto.route)
                     } else {
                         Toast.makeText(context, "Credenciais incorretas", Toast.LENGTH_SHORT).show()
                     }

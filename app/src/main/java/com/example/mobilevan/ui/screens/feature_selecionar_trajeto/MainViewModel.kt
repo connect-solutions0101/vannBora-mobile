@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.mobilevan.config.RetrofitConfig
-import com.example.mobilevan.enums.Periodo
 import com.example.mobilevan.service.TrajetoService
 import com.example.mobilevan.service.dto.TrajetoDTO
 import com.example.mobilevan.store.TokenStore
@@ -15,9 +14,10 @@ import kotlinx.coroutines.flow.firstOrNull
 class MainViewModel: ViewModel() {
 
     var trajetos by mutableStateOf<List<TrajetoDTO>>(emptyList())
+    var trajetoSelecionado by mutableStateOf<TrajetoDTO?>(null)
+    var showTrajetoDialog by mutableStateOf(false)
 
     suspend fun onScreenLoad(context: Context) {
-        println("Screen loaded")
         val api = RetrofitConfig.instance.create(TrajetoService::class.java)
         val token = TokenStore.getToken(context).firstOrNull()
         val userId = TokenStore.getUserId(context).firstOrNull()
@@ -43,5 +43,11 @@ class MainViewModel: ViewModel() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun onTrajetoClick(trajeto: TrajetoDTO) {
+        println("Trajeto clicked: $trajeto")
+        this.trajetoSelecionado = trajeto
+        showTrajetoDialog = true
     }
 }
