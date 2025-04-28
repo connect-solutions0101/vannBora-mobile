@@ -50,7 +50,6 @@ fun SelecionarTrajeto(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        Log.d("TrajetoScreen", "Componente iniciado")
         viewModel.onScreenLoad(context)
     }
 

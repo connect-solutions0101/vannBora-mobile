@@ -31,6 +31,12 @@ fun Trajeto(
 ) {
     val context = LocalContext.current
 
+    LaunchedEffect(viewModel.trajetoFinalizado) {
+        if (viewModel.trajetoFinalizado) {
+            navController.navigate(Routes.SelecionarTrajeto.route)
+        }
+    }
+
     LaunchedEffect(Unit) {
         if (trajetoId == null) {
             navController.navigate(Routes.SelecionarTrajeto.route)
@@ -87,11 +93,13 @@ fun Trajeto(
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Nome do aluno",
-                    fontSize = 18.sp,
-                    color = Color.Black
-                )
+                viewModel.dependenteAtual?.nome?.let {
+                    Text(
+                        text = it,
+                        fontSize = 18.sp,
+                        color = Color.Black
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
@@ -120,7 +128,9 @@ fun Trajeto(
 
             Spacer(modifier = Modifier.height(60.dp))
             IconButton(
-                onClick = { },
+                onClick = {
+                     viewModel.onConfirmClick()
+                },
                 modifier = Modifier
                     .size(120.dp)
                     .background(Color(0xFF001F4D), shape = RoundedCornerShape(12.dp))
