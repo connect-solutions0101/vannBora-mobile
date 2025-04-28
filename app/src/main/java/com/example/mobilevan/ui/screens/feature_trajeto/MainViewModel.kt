@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_selecionar_trajeto
+package com.example.mobilevan.ui.screens.feature_trajeto
 
 import android.content.Context
 import androidx.compose.runtime.getValue
@@ -11,13 +11,11 @@ import com.example.mobilevan.service.dto.TrajetoDTO
 import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
 
-class MainViewModel: ViewModel() {
+class MainViewModel: ViewModel(){
 
-    var trajetos by mutableStateOf<List<TrajetoDTO>>(emptyList())
-    var trajetoSelecionado by mutableStateOf<TrajetoDTO?>(null)
-    var showTrajetoDialog by mutableStateOf(false)
+    var trajeto by mutableStateOf<TrajetoDTO?>(null)
 
-    suspend fun onScreenLoad(context: Context) {
+    suspend fun onScreenLoad(context: Context, trajetoId: String) {
         val api = RetrofitConfig.instance.create(TrajetoService::class.java)
         val token = TokenStore.getToken(context).firstOrNull()
         val userId = TokenStore.getUserId(context).firstOrNull()
@@ -28,26 +26,18 @@ class MainViewModel: ViewModel() {
         }
 
         try {
-            val response =  api.getTrajetos(userId, "Bearer $token")
+            val response =  api.getTrajeto(trajetoId, "Bearer $token")
 
             if (response.raw().code == 200) {
-                response.body()?.let { trajetos ->
-                    println("Trajetos: $trajetos")
-                    this.trajetos = trajetos
+                response.body()?.let { trajeto ->
+                    println("Trajeto: $trajeto")
+                    this.trajeto = trajeto
                 }
-            } else if (response.raw().code == 204){
-                println("No content")
-            } else {
+            }  else {
                 println("Error: ${response.raw().code}")
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-    fun onTrajetoClick(trajeto: TrajetoDTO) {
-        println("Trajeto clicked: $trajeto")
-        this.trajetoSelecionado = trajeto
-        showTrajetoDialog = true
     }
 }
