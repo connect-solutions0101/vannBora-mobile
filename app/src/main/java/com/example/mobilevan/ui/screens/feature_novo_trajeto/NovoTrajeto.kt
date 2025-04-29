@@ -13,18 +13,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.mobilevan.ui.screens.feature_novo_trajeto.MainViewModel
 import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.AmareloVann
 import com.example.mobilevan.ui.theme.CinzaVann
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NovoTrajeto(navController: NavHostController) {
+fun NovoTrajeto(
+    navController: NavHostController,
+    viewModel: MainViewModel = viewModel()
+) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
     var nomeTrajeto by remember { mutableStateOf("") }
     var periodoTrajeto by remember { mutableStateOf("") }
-    var nome by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -73,8 +82,8 @@ fun NovoTrajeto(navController: NavHostController) {
                         fontWeight = FontWeight.SemiBold
                     )
                     OutlinedTextField(
-                        value = nome,
-                        onValueChange = { nome = it },
+                        value = nomeTrajeto,
+                        onValueChange = { nomeTrajeto = it },
                         label = { Text("Insira o nome") },
                         shape = RoundedCornerShape(8.dp),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -117,7 +126,15 @@ fun NovoTrajeto(navController: NavHostController) {
                         ),
                         shape = RoundedCornerShape(15.dp),
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = {}
+                        onClick = {
+                            coroutineScope.launch {
+                                viewModel.onAdicionarNovoTrajetoClick(
+                                    context = context,
+                                    nomeTrajeto = nomeTrajeto,
+                                    periodoTrajeto = periodoTrajeto
+                                )
+                            }
+                        }
                     ) {
                         Text(text = "Adicionar")
                     }
