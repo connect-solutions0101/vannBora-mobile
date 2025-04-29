@@ -1,29 +1,48 @@
 package com.example.mobilevan.ui.screens.feature_novo_trajeto
 
 import HomeTopBar
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.mobilevan.ui.screens.feature_novo_trajeto.MainViewModel
-import com.example.mobilevan.ui.theme.AzulVann
+import com.example.mobilevan.enums.Periodo
+import com.example.mobilevan.ui.components.ComboBox
+import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AmareloVann
+import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
 fun NovoTrajeto(
     navController: NavHostController,
@@ -32,8 +51,11 @@ fun NovoTrajeto(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    var nomeTrajeto by remember { mutableStateOf("") }
-    var periodoTrajeto by remember { mutableStateOf("") }
+    LaunchedEffect(viewModel.trajetoCriado) {
+        if (viewModel.trajetoCriado) {
+            navController.navigate(Routes.SelecionarTrajeto.route)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -82,16 +104,15 @@ fun NovoTrajeto(
                         fontWeight = FontWeight.SemiBold
                     )
                     OutlinedTextField(
-                        value = nomeTrajeto,
-                        onValueChange = { nomeTrajeto = it },
-                        label = { Text("Insira o nome") },
+                        value = viewModel.nomeTrajeto,
+                        onValueChange = { viewModel.nomeTrajeto = it },
                         shape = RoundedCornerShape(8.dp),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             containerColor = CinzaVann,
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent
                         ),
-                        textStyle = androidx.compose.ui.text.TextStyle(textAlign = TextAlign.Center),
+                        textStyle = TextStyle(textAlign = TextAlign.Center),
                         modifier = Modifier
                             .fillMaxWidth()
                     )
@@ -103,18 +124,10 @@ fun NovoTrajeto(
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(top = 16.dp, bottom = 4.dp)
                     )
-                    OutlinedTextField(
-                        value = periodoTrajeto,
-                        onValueChange = { periodoTrajeto = it },
-                        label = { Text("Manhã, tarde, noite...") },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            containerColor = CinzaVann,
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent
-                        ),
-                        textStyle = androidx.compose.ui.text.TextStyle(textAlign = TextAlign.Center),
-                        modifier = Modifier.fillMaxWidth()
+                    ComboBox(
+                        options = Periodo.entries,
+                        selectedOption = viewModel.periodoTrajeto,
+                        optionToString = { it?.getDescricao() ?: "" },
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -129,9 +142,7 @@ fun NovoTrajeto(
                         onClick = {
                             coroutineScope.launch {
                                 viewModel.onAdicionarNovoTrajetoClick(
-                                    context = context,
-                                    nomeTrajeto = nomeTrajeto,
-                                    periodoTrajeto = periodoTrajeto
+                                    context = context
                                 )
                             }
                         }

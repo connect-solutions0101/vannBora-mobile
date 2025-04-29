@@ -17,7 +17,7 @@ interface TrajetoService {
     @GET("/trajetos/{id}/single")
     suspend fun getTrajeto( @Path("id") id: String, @Header("Authorization") token: String ): Response<TrajetoDTO>
 
-    @POST("trajetos/criar")
+    @POST("trajetos")
     suspend fun criarTrajeto(@Header("Authorization") token: String, @Body trajetoRequestDto: TrajetoRequestDto): Response<TrajetoDTO>
 
 }
