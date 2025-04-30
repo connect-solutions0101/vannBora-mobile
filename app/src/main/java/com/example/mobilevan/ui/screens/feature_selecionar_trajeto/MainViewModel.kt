@@ -50,4 +50,5 @@ class MainViewModel: ViewModel() {
         this.trajetoSelecionado = trajeto
         showTrajetoDialog = true
     }
+
 }

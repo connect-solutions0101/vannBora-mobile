@@ -140,7 +140,7 @@ fun TelaLogin(
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(
-            onClick = { /* tela de cadastro */ },
+            onClick = {navController.navigate(Routes.NovoTrajeto.route)},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(buildAnnotatedString {
