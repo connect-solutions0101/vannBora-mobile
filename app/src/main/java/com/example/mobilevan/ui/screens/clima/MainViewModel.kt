@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_clima
+package com.example.mobilevan.ui.screens.clima
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
 import com.example.mobilevan.config.RetrofitConfigHgbr
 
-class WeatherViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
     private val _weather = mutableStateOf<WeatherResponse?>(null)
     val weather: State<WeatherResponse?> = _weather

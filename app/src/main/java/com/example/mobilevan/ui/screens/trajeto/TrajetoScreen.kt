@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_trajeto
+package com.example.mobilevan.ui.screens.trajeto
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,7 +24,7 @@ import com.example.mobilevan.ui.navigation.Routes
 
 @Preview(showBackground = true)
 @Composable
-fun Trajeto(
+fun TrajetoScreen(
     navController: NavHostController = rememberNavController(),
     trajetoId: String? = null,
     viewModel: MainViewModel = viewModel()

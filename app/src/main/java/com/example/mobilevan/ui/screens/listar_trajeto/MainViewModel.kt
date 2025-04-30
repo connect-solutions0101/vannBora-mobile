@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_selecionar_trajeto
+package com.example.mobilevan.ui.screens.listar_trajeto
 
 import android.content.Context
 import androidx.compose.runtime.getValue
