@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_login
+package com.example.mobilevan.ui.screens.login
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -31,7 +31,7 @@ import com.example.mobilevan.ui.navigation.Routes
 
 
 @Composable
-fun TelaLogin(
+fun LoginScreen(
     navController: NavHostController,
     viewModel: MainViewModel = viewModel()
 ) {
@@ -158,5 +158,5 @@ fun TelaLogin(
 @Preview(showBackground = true)
 @Composable
 fun PreviewTelaLogin() {
-    TelaLogin(navController = rememberNavController())
+    LoginScreen(navController = rememberNavController())
 }

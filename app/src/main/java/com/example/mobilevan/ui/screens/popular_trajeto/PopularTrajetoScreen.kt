@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_criar_trajeto
+package com.example.mobilevan.ui.screens.popular_trajeto
 
 import HomeTopBar
 import SearchBarPrev
@@ -22,7 +22,7 @@ import com.example.mobilevan.ui.theme.AzulVann
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CriarTrajeto(
+fun PopularTrajetoScreen(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = viewModel()
 ) {
@@ -102,5 +102,5 @@ fun CriarTrajeto(
 @Composable
 fun CriarTrajetoPrev() {
     val vm = MainViewModel()
-    CriarTrajeto(viewModel = vm)
+    PopularTrajetoScreen(viewModel = vm)
 }

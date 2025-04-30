@@ -7,25 +7,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.mobilevan.ui.screens.feature_novo_trajeto.NovoTrajeto
-import com.example.mobilevan.ui.screens.feature_selecionar_trajeto.SelecionarTrajeto
-import com.example.mobilevan.ui.screens.feature_clima.ClimaScreen
-import com.example.mobilevan.ui.screens.feature_login.TelaLogin
-import com.example.mobilevan.ui.screens.feature_trajeto.Trajeto
+import com.example.mobilevan.ui.screens.criar_trajeto.CriarTrajetoScreen
+import com.example.mobilevan.ui.screens.listar_trajeto.ListagemTrajetosScreen
+import com.example.mobilevan.ui.screens.clima.ClimaScreen
+import com.example.mobilevan.ui.screens.login.LoginScreen
+import com.example.mobilevan.ui.screens.trajeto.TrajetoScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.Login.toString()) {
-        composable(Routes.Login.route) { TelaLogin(navController) }
-        composable(Routes.NovoTrajeto.route) { NovoTrajeto(navController) }
-        composable(Routes.SelecionarTrajeto.route) { SelecionarTrajeto(navController) }
+        composable(Routes.Login.route) { LoginScreen(navController) }
+        composable(Routes.NovoTrajeto.route) { CriarTrajetoScreen(navController) }
+        composable(Routes.SelecionarTrajeto.route) { ListagemTrajetosScreen(navController) }
         composable(route = Routes.Trajeto.route, arguments = listOf(
             navArgument("trajetoId") { type = NavType.StringType }
         )) {backStackEntry ->
             val trajetoId = backStackEntry.arguments?.getString("trajetoId")
-            Trajeto(navController, trajetoId)
+            TrajetoScreen(navController, trajetoId)
         }
         composable(Routes.ClimaScreen.route) { ClimaScreen(navController)}
     }

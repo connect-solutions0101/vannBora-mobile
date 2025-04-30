@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_criar_trajeto
+package com.example.mobilevan.ui.screens.popular_trajeto
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf

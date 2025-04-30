@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_novo_trajeto
+package com.example.mobilevan.ui.screens.criar_trajeto
 
 import HomeTopBar
 import androidx.compose.foundation.layout.Arrangement
@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
-fun NovoTrajeto(
+fun CriarTrajetoScreen(
     navController: NavHostController,
     viewModel: MainViewModel = viewModel()
 ) {
@@ -158,5 +158,5 @@ fun NovoTrajeto(
 @Preview(showBackground = true)
 @Composable
 fun PreviewNovoTrajeto() {
-    NovoTrajeto(navController = rememberNavController())
+    CriarTrajetoScreen(navController = rememberNavController())
 }

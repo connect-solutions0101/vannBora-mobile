@@ -1,7 +1,6 @@
-package com.example.mobilevan.ui.screens.feature_selecionar_trajeto
+package com.example.mobilevan.ui.screens.listar_trajeto
 
 import HomeTopBar
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,19 +30,17 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.service.dto.TrajetoDTO
 import com.example.mobilevan.ui.components.ModalSelecionarTrajeto
 import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
 
 @Composable
-fun SelecionarTrajeto(
+fun ListagemTrajetosScreen(
     navController: NavHostController,
     viewModel: MainViewModel = viewModel()
 ) {
@@ -205,6 +202,7 @@ fun CoreListagemTrajetos(
             TrajetoCard(trajetos[index]) {
                 onTrajetoSelected(index)
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -239,10 +237,4 @@ fun TrajetoCard(trajeto: TrajetoDTO, onClick: () -> Unit) {
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewTrajetoScreen() {
-    SelecionarTrajeto(navController = rememberNavController())
 }

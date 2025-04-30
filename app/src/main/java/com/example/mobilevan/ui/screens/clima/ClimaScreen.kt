@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_clima
+package com.example.mobilevan.ui.screens.clima
 
 import HomeTopBar
 import androidx.compose.foundation.background
@@ -23,7 +23,7 @@ import com.example.mobilevan.ui.theme.AzulVann
 @Composable
 fun ClimaScreen(
     navController: NavHostController,
-    viewModel: WeatherViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
     val weather = viewModel.weather.value

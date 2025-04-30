@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_login
+package com.example.mobilevan.ui.screens.login
 
 import android.content.Context
 import androidx.compose.runtime.getValue

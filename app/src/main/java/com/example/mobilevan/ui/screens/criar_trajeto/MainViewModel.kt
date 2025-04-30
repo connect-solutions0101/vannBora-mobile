@@ -1,4 +1,4 @@
-package com.example.mobilevan.ui.screens.feature_novo_trajeto
+package com.example.mobilevan.ui.screens.criar_trajeto
 
 import android.content.Context
 import androidx.compose.runtime.getValue
