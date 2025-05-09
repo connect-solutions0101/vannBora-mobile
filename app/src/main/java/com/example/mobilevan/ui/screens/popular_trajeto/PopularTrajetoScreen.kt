@@ -2,12 +2,24 @@ package com.example.mobilevan.ui.screens.popular_trajeto
 
 import HomeTopBar
 import SearchBarPrev
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilevan.ui.components.CardAluno
-import com.example.mobilevan.ui.theme.AmareloVann
 import com.example.mobilevan.ui.theme.AzulVann
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,7 +38,9 @@ fun PopularTrajetoScreen(
     viewModel: MainViewModel = viewModel()
 ) {
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color(0xFFF5F5F5)),
         topBar = {
             HomeTopBar(
                 title = "Olá ${viewModel.nomeUsuario}",
@@ -82,7 +95,7 @@ fun PopularTrajetoScreen(
             ) {
                 Button(
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = AmareloVann,
+                        containerColor = Color(0xFFFBBF24),
                         contentColor = Color.Black,
                     ),
                     shape = RoundedCornerShape(15.dp),
@@ -97,8 +110,7 @@ fun PopularTrajetoScreen(
         }
     }
 }
-
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun CriarTrajetoPrev() {
     val vm = MainViewModel()

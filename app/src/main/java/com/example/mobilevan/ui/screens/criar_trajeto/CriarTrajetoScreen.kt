@@ -1,6 +1,7 @@
 package com.example.mobilevan.ui.screens.criar_trajeto
 
 import HomeTopBar
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,7 +38,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.enums.Periodo
 import com.example.mobilevan.ui.components.ComboBox
 import com.example.mobilevan.ui.navigation.Routes
-import com.example.mobilevan.ui.theme.AmareloVann
 import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
 import kotlinx.coroutines.launch
@@ -66,7 +66,8 @@ fun CriarTrajetoScreen(
                 containerColor = AzulVann,
             )
         },
-        containerColor = Color.White
+        containerColor = Color.White,
+        modifier = Modifier.background(Color(0xFFF5F5F5))
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -134,7 +135,7 @@ fun CriarTrajetoScreen(
 
                     Button(
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = AmareloVann,
+                            containerColor = Color(0xFFFBBF24),
                             contentColor = Color.Black
                         ),
                         shape = RoundedCornerShape(15.dp),
@@ -154,8 +155,7 @@ fun CriarTrajetoScreen(
         }
     }
 }
-
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun PreviewNovoTrajeto() {
     CriarTrajetoScreen(navController = rememberNavController())

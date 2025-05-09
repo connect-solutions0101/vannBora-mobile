@@ -35,7 +35,7 @@ fun ClimaScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(238,240,242))
+            .background(Color(0xFFF5F5F5))
     ) {
 
         HomeTopBar(
@@ -177,8 +177,7 @@ fun climaEmoji(description: String): String {
         else -> "⛅"
     }
 }
-
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun ClimaScreenPrev() {
     ClimaScreen(navController = rememberNavController())

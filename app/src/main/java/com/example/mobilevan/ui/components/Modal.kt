@@ -9,8 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.mobilevan.ui.theme.AzulVann
 
 @Composable
@@ -25,13 +27,19 @@ fun ModalSelecionarTrajeto(
 ) {
     if (showDialog) {
         AlertDialog(
+            containerColor = Color(0xFFF5F5F5),
             modifier = Modifier
                 .background(
                     color = Color(0xFFF5F5F5),
                     shape = RoundedCornerShape(16.dp)
                 ),
             onDismissRequest = { onDismiss() },
-            title = { Text(title) },
+            title = { Text(
+                text = title,
+                color = AzulVann,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            ) },
             dismissButton = {
                 Button(
                     colors = ButtonDefaults.buttonColors(
