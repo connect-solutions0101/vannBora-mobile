@@ -19,12 +19,13 @@ fun CardAluno(
     nome: String,
     escola: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = AzulVann,
-            contentColor = Color.White,
+            containerColor = if (isSelected) Color(0xFFFBBF24) else AzulVann,
+            contentColor = if (isSelected) AzulVann else Color.White
         ),
         shape = RoundedCornerShape(12.dp),
         modifier = modifier

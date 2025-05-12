@@ -37,7 +37,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.enums.Periodo
 import com.example.mobilevan.ui.components.ComboBox
-import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
 import kotlinx.coroutines.launch
@@ -53,7 +52,7 @@ fun CriarTrajetoScreen(
 
     LaunchedEffect(viewModel.trajetoCriado) {
         if (viewModel.trajetoCriado) {
-            navController.navigate(Routes.SelecionarTrajeto.route)
+            navController.navigate("PopularTrajeto/${viewModel.trajetoRetorno?.id}")
         }
     }
 

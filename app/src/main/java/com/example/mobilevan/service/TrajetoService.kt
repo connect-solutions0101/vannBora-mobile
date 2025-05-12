@@ -1,7 +1,9 @@
 package com.example.mobilevan.service
 
+import com.example.mobilevan.service.dto.DependenteDTO
 import com.example.mobilevan.service.dto.TrajetoDTO
 import com.example.mobilevan.service.dto.TrajetoRequestDto
+import com.example.mobilevan.service.request.DependenteResponsavelRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,5 +21,8 @@ interface TrajetoService {
 
     @POST("trajetos")
     suspend fun criarTrajeto(@Header("Authorization") token: String, @Body trajetoRequestDto: TrajetoRequestDto): Response<TrajetoDTO>
+
+    @POST("trajetos/popular/{trajetoId}")
+    suspend fun popularTrajeto(@Path("trajetoId") trajetoId: String, @Header("Authorization") token: String, @Body dependentes: List<DependenteResponsavelRequest>): Response<TrajetoDTO>
 
 }

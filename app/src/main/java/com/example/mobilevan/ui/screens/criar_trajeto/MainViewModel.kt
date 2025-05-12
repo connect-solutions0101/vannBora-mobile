@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.mobilevan.config.RetrofitConfig
 import com.example.mobilevan.enums.Periodo
 import com.example.mobilevan.service.TrajetoService
+import com.example.mobilevan.service.dto.TrajetoDTO
 import com.example.mobilevan.service.dto.TrajetoRequestDto
 import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
@@ -18,6 +19,7 @@ class MainViewModel : ViewModel() {
 
     var trajetoCriado by mutableStateOf(false)
     var erroCriarTrajeto by mutableStateOf<String?>(null)
+    var trajetoRetorno by mutableStateOf<TrajetoDTO?>(null)
 
     suspend fun onAdicionarNovoTrajetoClick(
         context: Context
@@ -68,6 +70,7 @@ class MainViewModel : ViewModel() {
             )
             if (response.isSuccessful) {
                 response.body()?.let {
+                    trajetoRetorno = it
                     return true
                 }
             }
