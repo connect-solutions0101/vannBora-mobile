@@ -69,7 +69,7 @@ fun ListagemTrajetosScreen(
     Scaffold(
         topBar = {
             HomeTopBar(
-                title = "Olá Roberto",
+                title = "Olá ",
                 onNavigationIconClick = {navController.navigate("login")},
                 onActionIconClick = {},
                 containerColor = AzulVann,

@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.mobilevan.service.request.DependenteResponsavelRequest
 import com.example.mobilevan.ui.components.CardAluno
+import com.example.mobilevan.ui.components.ModalSelecionarResponsavel
 import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
 import kotlinx.coroutines.launch
@@ -56,6 +58,28 @@ fun PopularTrajetoScreen(
         if (viewModel.trajetoPopulado) {
             navController.navigate(Routes.SelecionarTrajeto.route)
         }
+    }
+
+    if(viewModel.showResponsavelDialog){
+        ModalSelecionarResponsavel(
+            responsaveis = viewModel.listaResponsaveis,
+            onConfirmarClick = {
+                viewModel.showResponsavelDialog = false
+                viewModel.listaAlunosParaSalvar.add(
+                    DependenteResponsavelRequest(
+                        idDependente = viewModel.dependenteId!!,
+                        idResponsavel = viewModel.responsavelSelecionado!!.id
+                    )
+                )
+           },
+            onResponsavelClick = {
+                if(viewModel.dependenteId == null){
+                    return@ModalSelecionarResponsavel
+                }
+                viewModel.responsavelSelecionado = it
+            },
+            isSelected = { it == viewModel.responsavelSelecionado }
+        )
     }
 
     Scaffold(

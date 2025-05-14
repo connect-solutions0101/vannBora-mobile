@@ -10,6 +10,7 @@ import com.example.mobilevan.config.RetrofitConfig
 import com.example.mobilevan.service.DependenteService
 import com.example.mobilevan.service.TrajetoService
 import com.example.mobilevan.service.dto.DependenteDTO
+import com.example.mobilevan.service.dto.ResponsavelDTO
 import com.example.mobilevan.service.request.DependenteResponsavelRequest
 import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
@@ -22,6 +23,11 @@ class MainViewModel : ViewModel() {
     val listaAlunos = mutableStateListOf<DependenteDTO>()
     val listaAlunosParaSalvar = mutableStateListOf<DependenteResponsavelRequest>()
     var trajetoPopulado by mutableStateOf(false)
+
+    val listaResponsaveis = mutableStateListOf<ResponsavelDTO>()
+    var responsavelSelecionado by mutableStateOf<ResponsavelDTO?>(null)
+    var dependenteId by mutableStateOf<Int?>(null)
+    var showResponsavelDialog by mutableStateOf(false)
 
     suspend fun onScreenLoad(context: Context) {
         val api = RetrofitConfig.instance.create(DependenteService::class.java)
@@ -97,7 +103,9 @@ class MainViewModel : ViewModel() {
                     )
                 )
             }else{
-                //TODO: modal para selecionar o responsavel
+                showResponsavelDialog = true
+                listaResponsaveis.addAll(aluno.responsaveis.map { it.responsavel })
+                dependenteId = aluno.id
             }
         }else{
             val alunoRemover = listaAlunosParaSalvar.find { it.idDependente == aluno.id }

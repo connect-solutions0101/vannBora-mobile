@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mobilevan.enums.Periodo
+import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
@@ -53,8 +54,13 @@ fun <T>ComboBox(
             shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 containerColor = CinzaVann,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
+                focusedBorderColor = AzulVann,
+                unfocusedBorderColor = AzulVann,
+                focusedLabelColor = AzulVann,
+                unfocusedLabelColor = AzulVann,
+                focusedTextColor = AzulVann,
+                unfocusedTextColor = AzulVann,
+                cursorColor = AzulVann
             ),
             textStyle = TextStyle(textAlign = TextAlign.Center),
             modifier = Modifier

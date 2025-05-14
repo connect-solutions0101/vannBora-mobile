@@ -109,8 +109,13 @@ fun CriarTrajetoScreen(
                         shape = RoundedCornerShape(8.dp),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             containerColor = CinzaVann,
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent
+                            focusedBorderColor = AzulVann,
+                            unfocusedBorderColor = AzulVann,
+                            focusedLabelColor = AzulVann,
+                            unfocusedLabelColor = AzulVann,
+                            focusedTextColor = AzulVann,
+                            unfocusedTextColor = AzulVann,
+                            cursorColor = AzulVann
                         ),
                         textStyle = TextStyle(textAlign = TextAlign.Center),
                         modifier = Modifier
