@@ -20,25 +20,70 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.mobilevan.service.request.DependenteResponsavelRequest
 import com.example.mobilevan.ui.components.CardAluno
+import com.example.mobilevan.ui.components.ModalSelecionarResponsavel
+import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PopularTrajetoScreen(
-    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    trajetoId: String? = null,
     viewModel: MainViewModel = viewModel()
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.onScreenLoad(context)
+    }
+
+    LaunchedEffect(viewModel.trajetoPopulado) {
+        if (viewModel.trajetoPopulado) {
+            navController.navigate(Routes.SelecionarTrajeto.route)
+        }
+    }
+
+    if(viewModel.showResponsavelDialog){
+        ModalSelecionarResponsavel(
+            responsaveis = viewModel.listaResponsaveis,
+            onConfirmarClick = {
+                viewModel.showResponsavelDialog = false
+                viewModel.listaAlunosParaSalvar.add(
+                    DependenteResponsavelRequest(
+                        idDependente = viewModel.dependenteId!!,
+                        idResponsavel = viewModel.responsavelSelecionado!!.id
+                    )
+                )
+           },
+            onResponsavelClick = {
+                if(viewModel.dependenteId == null){
+                    return@ModalSelecionarResponsavel
+                }
+                viewModel.responsavelSelecionado = it
+            },
+            isSelected = { it == viewModel.responsavelSelecionado }
+        )
+    }
+
     Scaffold(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF5F5F5)),
         topBar = {
@@ -52,6 +97,7 @@ fun PopularTrajetoScreen(
     ) { paddingValues ->
         Column(
             modifier = Modifier
+                .background(Color(0xFFF5F5F5))
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(horizontal = 56.dp),
@@ -78,11 +124,15 @@ fun PopularTrajetoScreen(
                 if (viewModel.listaAlunos.isEmpty()) {
                     Text("Nenhum aluno disponível.")
                 } else {
-                    viewModel.listaAlunos.forEach { alunoPair ->
+                    viewModel.listaAlunos.forEach { aluno ->
                         CardAluno(
-                            nome = alunoPair.first,
-                            escola = alunoPair.second,
-                            onClick = { viewModel.aoClicarCardAluno(alunoPair) }
+                            isSelected = viewModel.isAlunoSelecionado(aluno),
+                            nome = aluno.nome,
+                            escola = aluno.escola.nome,
+                            onClick = { viewModel.aoClicarCardAluno(
+                                aluno,
+                                !viewModel.isAlunoSelecionado(aluno)
+                            ) }
                         )
                     }
                 }
@@ -102,9 +152,16 @@ fun PopularTrajetoScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
-                    onClick = viewModel::onNovoTrajetoClick,
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.onNovoTrajetoClick(
+                                context = context,
+                                trajetoId = trajetoId
+                            )
+                        }
+                    }
                 ) {
-                    Text(text = "Novo Trajeto", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(text = "Inserir alunos no Trajeto", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 }
             }
         }
@@ -114,5 +171,5 @@ fun PopularTrajetoScreen(
 @Composable
 fun CriarTrajetoPrev() {
     val vm = MainViewModel()
-    PopularTrajetoScreen(viewModel = vm)
+    PopularTrajetoScreen(viewModel = vm, navController = rememberNavController())
 }

@@ -17,9 +17,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -42,9 +45,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import com.example.mobilevan.ui.navigation.Routes
+import com.example.mobilevan.ui.theme.AzulVann
+import com.example.mobilevan.ui.theme.CinzaVann
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navController: NavHostController,
@@ -112,6 +118,16 @@ fun LoginScreen(
                 .fillMaxWidth()  // Preenche toda a largura disponível
                 .wrapContentHeight(),  // Ajusta a altura automaticamente
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                containerColor = CinzaVann,
+                focusedBorderColor = AzulVann,
+                unfocusedBorderColor = AzulVann,
+                focusedLabelColor = AzulVann,
+                unfocusedLabelColor = AzulVann,
+                focusedTextColor = AzulVann,
+                unfocusedTextColor = AzulVann,
+                cursorColor = AzulVann,
+            ),
             shape = shape
         )
 
@@ -127,6 +143,16 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .wrapContentHeight(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                containerColor = CinzaVann,
+                focusedBorderColor = AzulVann,
+                unfocusedBorderColor = AzulVann,
+                focusedLabelColor = AzulVann,
+                unfocusedLabelColor = AzulVann,
+                focusedTextColor = AzulVann,
+                unfocusedTextColor = AzulVann,
+                cursorColor = AzulVann,
+            ),
             shape = shape,
             visualTransformation = PasswordVisualTransformation()  // Esconde os caracteres com asteriscos
         )

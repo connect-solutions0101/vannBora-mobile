@@ -37,7 +37,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.enums.Periodo
 import com.example.mobilevan.ui.components.ComboBox
-import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
 import kotlinx.coroutines.launch
@@ -53,7 +52,7 @@ fun CriarTrajetoScreen(
 
     LaunchedEffect(viewModel.trajetoCriado) {
         if (viewModel.trajetoCriado) {
-            navController.navigate(Routes.SelecionarTrajeto.route)
+            navController.navigate("PopularTrajeto/${viewModel.trajetoRetorno?.id}")
         }
     }
 
@@ -110,8 +109,13 @@ fun CriarTrajetoScreen(
                         shape = RoundedCornerShape(8.dp),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             containerColor = CinzaVann,
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent
+                            focusedBorderColor = AzulVann,
+                            unfocusedBorderColor = AzulVann,
+                            focusedLabelColor = AzulVann,
+                            unfocusedLabelColor = AzulVann,
+                            focusedTextColor = AzulVann,
+                            unfocusedTextColor = AzulVann,
+                            cursorColor = AzulVann
                         ),
                         textStyle = TextStyle(textAlign = TextAlign.Center),
                         modifier = Modifier

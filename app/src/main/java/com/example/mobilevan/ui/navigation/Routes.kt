@@ -15,6 +15,9 @@ sealed class Routes(val route: String) {
     data object NovoTrajeto : Routes("NovoTrajeto")
 
     @Serializable
+    data object PopularTrajeto : Routes("PopularTrajeto/{trajetoId}")
+
+    @Serializable
     data object Trajeto : Routes("Trajeto/{trajetoId}")
 
     @Serializable
