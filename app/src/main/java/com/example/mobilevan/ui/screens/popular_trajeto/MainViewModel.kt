@@ -16,9 +16,7 @@ import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
 
 class MainViewModel : ViewModel() {
-
-    var nomeUsuario by mutableStateOf("Roberto")
-        private set
+    var nomeUsuario by mutableStateOf("")
 
     val listaAlunos = mutableStateListOf<DependenteDTO>()
     val listaAlunosParaSalvar = mutableStateListOf<DependenteResponsavelRequest>()
@@ -33,6 +31,7 @@ class MainViewModel : ViewModel() {
         val api = RetrofitConfig.instance.create(DependenteService::class.java)
         val token = TokenStore.getToken(context).firstOrNull()
         val userId = TokenStore.getUserId(context).firstOrNull()
+        nomeUsuario = TokenStore.getUserName(context).firstOrNull() ?: ""
 
         if (token.isNullOrEmpty() || userId == null) {
             println("Token or User ID is null")

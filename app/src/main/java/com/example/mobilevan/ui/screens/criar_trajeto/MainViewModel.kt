@@ -14,6 +14,8 @@ import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
 
 class MainViewModel : ViewModel() {
+    var nomeUsuario by mutableStateOf("")
+
     var nomeTrajeto by mutableStateOf("")
     val periodoTrajeto = mutableStateOf<Periodo?>(null)
 
