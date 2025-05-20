@@ -52,7 +52,7 @@ fun PopularTrajetoScreen(
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        viewModel.onScreenLoad(context)
+        viewModel.onScreenLoad(context, trajetoId)
     }
 
     LaunchedEffect(viewModel.trajetoPopulado) {
@@ -156,7 +156,6 @@ fun PopularTrajetoScreen(
                     onClick = {
                         coroutineScope.launch {
                             viewModel.onNovoTrajetoClick(
-                                context = context,
                                 trajetoId = trajetoId
                             )
                         }
