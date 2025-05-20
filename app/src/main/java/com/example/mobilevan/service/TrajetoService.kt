@@ -1,6 +1,5 @@
 package com.example.mobilevan.service
 
-import com.example.mobilevan.service.dto.DependenteDTO
 import com.example.mobilevan.service.dto.TrajetoDTO
 import com.example.mobilevan.service.dto.TrajetoRequestDto
 import com.example.mobilevan.service.request.DependenteResponsavelRequest

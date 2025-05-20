@@ -36,9 +36,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.enums.Periodo
+import com.example.mobilevan.store.TokenStore
 import com.example.mobilevan.ui.components.ComboBox
 import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
@@ -54,12 +56,14 @@ fun CriarTrajetoScreen(
         if (viewModel.trajetoCriado) {
             navController.navigate("PopularTrajeto/${viewModel.trajetoRetorno?.id}")
         }
+
+        viewModel.nomeUsuario = TokenStore.getUserName(context).firstOrNull() ?: ""
     }
 
     Scaffold(
         topBar = {
             HomeTopBar(
-                title = "Olá Roberto",
+                title = "Olá ${viewModel.nomeUsuario}",
                 onNavigationIconClick = { navController.navigate("tela_inicial") },
                 onActionIconClick = {},
                 containerColor = AzulVann,

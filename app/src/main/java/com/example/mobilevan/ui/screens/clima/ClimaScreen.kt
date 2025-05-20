@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -18,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
+import com.example.mobilevan.store.TokenStore
 import com.example.mobilevan.ui.theme.AzulVann
 
 @Composable
@@ -26,6 +28,7 @@ fun ClimaScreen(
     viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
+    val context = LocalContext.current
     val weather = viewModel.weather.value
 
     LaunchedEffect(Unit) {
@@ -39,7 +42,7 @@ fun ClimaScreen(
     ) {
 
         HomeTopBar(
-            title = "Olá Roberto",
+            title = "Olá ${TokenStore.getUserName(context)}",
             onNavigationIconClick = {navController.navigate("login")},
             onActionIconClick = {},
             containerColor = AzulVann,

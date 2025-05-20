@@ -14,11 +14,13 @@ object TokenStore {
 
     private val TOKEN_KEY = stringPreferencesKey("JWT_TOKEN")
     private val USER_ID = intPreferencesKey("USER_ID")
+    private val USER_NAME = stringPreferencesKey("USER_NAME")
 
-    suspend fun saveToken(context: Context, token: String, userId: Int) {
+    suspend fun saveToken(context: Context, token: String, userId: Int, userName: String) {
         context.tokenStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
             preferences[USER_ID] = userId
+            preferences[USER_NAME] = userName
         }
     }
 
@@ -31,6 +33,12 @@ object TokenStore {
     fun getUserId(context: Context): Flow<Int?> {
         return context.tokenStore.data.map { preferences ->
             preferences[USER_ID]
+        }
+    }
+
+    fun getUserName(context: Context): Flow<String?> {
+        return context.tokenStore.data.map { preferences ->
+            preferences[USER_NAME]
         }
     }
 }

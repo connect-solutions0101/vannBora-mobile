@@ -63,13 +63,18 @@ fun ListagemTrajetosScreen(
             }
         },
         labelButton2 = "Editar",
-        onSelecionarOpcao2 = { }
+        onSelecionarOpcao2 = {
+            viewModel.showTrajetoDialog = false
+            viewModel.trajetoSelecionado?.id?.let {
+                navController.navigate("PopularTrajeto/$it")
+            }
+        }
     )
 
     Scaffold(
         topBar = {
             HomeTopBar(
-                title = "Olá ",
+                title = "Olá ${viewModel.nomeUsuario}",
                 onNavigationIconClick = {navController.navigate("login")},
                 onActionIconClick = {},
                 containerColor = AzulVann,

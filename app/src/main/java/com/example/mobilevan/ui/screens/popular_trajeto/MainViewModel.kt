@@ -16,9 +16,7 @@ import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
 
 class MainViewModel : ViewModel() {
-
-    var nomeUsuario by mutableStateOf("Roberto")
-        private set
+    var nomeUsuario by mutableStateOf("")
 
     val listaAlunos = mutableStateListOf<DependenteDTO>()
     val listaAlunosParaSalvar = mutableStateListOf<DependenteResponsavelRequest>()
@@ -29,10 +27,20 @@ class MainViewModel : ViewModel() {
     var dependenteId by mutableStateOf<Int?>(null)
     var showResponsavelDialog by mutableStateOf(false)
 
-    suspend fun onScreenLoad(context: Context) {
+    var token by mutableStateOf("")
+    var userId by mutableStateOf(0)
+
+    suspend fun onScreenLoad(context: Context, trajetoId: String?) {
+        token = TokenStore.getToken(context).firstOrNull() ?: ""
+        userId = TokenStore.getUserId(context).firstOrNull() ?: 0
+        nomeUsuario = TokenStore.getUserName(context).firstOrNull() ?: ""
+
+        buscarDependentes(userId, token)
+        buscarDependentesTrajeto(trajetoId, token)
+    }
+
+    private suspend fun buscarDependentes(userId: Int?, token: String?) {
         val api = RetrofitConfig.instance.create(DependenteService::class.java)
-        val token = TokenStore.getToken(context).firstOrNull()
-        val userId = TokenStore.getUserId(context).firstOrNull()
 
         if (token.isNullOrEmpty() || userId == null) {
             println("Token or User ID is null")
@@ -57,12 +65,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun popularTrajeto(context: Context, trajetoId: String?) {
-        if (trajetoId != null) {
-            val api = RetrofitConfig.instance.create(TrajetoService::class.java)
-            val token = TokenStore.getToken(context).firstOrNull()
+    private suspend fun popularTrajeto(trajetoId: String?) {
+        val api = RetrofitConfig.instance.create(TrajetoService::class.java)
 
-            if (token.isNullOrEmpty()) {
+        if (trajetoId != null) {
+
+            if (token.isEmpty()) {
                 println("Token is null")
                 return
             }
@@ -82,9 +90,40 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun onNovoTrajetoClick(context: Context, trajetoId: String?) {
+    private suspend fun buscarDependentesTrajeto(trajetoId: String?, token: String? = null) {
+        val api = RetrofitConfig.instance.create(TrajetoService::class.java)
+
+        if(trajetoId != null){
+
+            if (token.isNullOrEmpty()) {
+                println("Token is null")
+                return
+            }
+
+            try {
+                val response = api.getTrajeto(trajetoId, "Bearer $token")
+                if(response.raw().code == 200){
+                    response.body()?.let { trajeto ->
+                        listaAlunosParaSalvar.addAll(trajeto.trajetoDependentes.map {
+                            DependenteResponsavelRequest(
+                                idDependente = it.responsavelDependente.dependenteId,
+                                idResponsavel = it.responsavelDependente.responsavelId
+                            )
+                        })
+                    }
+                    println("Dependentes: ${listaAlunos.size}")
+                } else{
+                    println("Error: ${response.raw().code}")
+                }
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+
+    suspend fun onNovoTrajetoClick(trajetoId: String?) {
         if (trajetoId != null) {
-            popularTrajeto(context, trajetoId)
+            popularTrajeto(trajetoId)
         } else {
             println("Trajeto ID is null")
         }

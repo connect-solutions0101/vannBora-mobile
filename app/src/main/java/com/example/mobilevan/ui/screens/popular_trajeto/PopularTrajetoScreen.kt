@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.service.request.DependenteResponsavelRequest
+import com.example.mobilevan.store.TokenStore
 import com.example.mobilevan.ui.components.CardAluno
 import com.example.mobilevan.ui.components.ModalSelecionarResponsavel
 import com.example.mobilevan.ui.navigation.Routes
@@ -51,7 +52,7 @@ fun PopularTrajetoScreen(
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        viewModel.onScreenLoad(context)
+        viewModel.onScreenLoad(context, trajetoId)
     }
 
     LaunchedEffect(viewModel.trajetoPopulado) {
@@ -155,7 +156,6 @@ fun PopularTrajetoScreen(
                     onClick = {
                         coroutineScope.launch {
                             viewModel.onNovoTrajetoClick(
-                                context = context,
                                 trajetoId = trajetoId
                             )
                         }
