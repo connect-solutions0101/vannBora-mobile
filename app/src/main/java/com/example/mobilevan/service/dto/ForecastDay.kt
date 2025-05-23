@@ -7,5 +7,6 @@ data class ForecastDay(
     val date: String,
     val max: Int,
     val min: Int,
-    val description: String
+    val description: String,
+    val condition: String
 )

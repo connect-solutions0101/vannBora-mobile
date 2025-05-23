@@ -38,6 +38,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.enums.Periodo
 import com.example.mobilevan.store.TokenStore
 import com.example.mobilevan.ui.components.ComboBox
+import com.example.mobilevan.ui.navigation.Routes
 import com.example.mobilevan.ui.theme.AzulVann
 import com.example.mobilevan.ui.theme.CinzaVann
 import kotlinx.coroutines.flow.firstOrNull
@@ -64,8 +65,15 @@ fun CriarTrajetoScreen(
         topBar = {
             HomeTopBar(
                 title = "Olá ${viewModel.nomeUsuario}",
-                onNavigationIconClick = { navController.navigate("tela_inicial") },
-                onActionIconClick = {},
+                onNavigationIconClick = {
+                    navController.navigate(Routes.SelecionarTrajeto.route)
+                },
+                onActionIconClick = {
+                    coroutineScope.launch {
+                        TokenStore.clear(context)
+                        navController.navigate(Routes.Login.route)
+                    }
+                },
                 containerColor = AzulVann,
             )
         },

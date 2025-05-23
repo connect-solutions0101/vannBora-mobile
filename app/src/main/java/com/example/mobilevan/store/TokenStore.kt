@@ -24,6 +24,12 @@ object TokenStore {
         }
     }
 
+    suspend fun clear(context: Context) {
+        context.tokenStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
+
     fun getToken(context: Context): Flow<String?> {
         return context.tokenStore.data.map { preferences ->
             preferences[TOKEN_KEY]

@@ -8,5 +8,7 @@ data class WeatherResults(
     val temp: Int,
     val city: String,
     @SerialName("date") val date: String,
-    @SerialName("forecast") val forecast: List<ForecastDay>
+    @SerialName("description") val description: String,
+    @SerialName("condition_slug") val condition_slug: String,
+    @SerialName("forecast") val forecast: List<ForecastDay>,
 )

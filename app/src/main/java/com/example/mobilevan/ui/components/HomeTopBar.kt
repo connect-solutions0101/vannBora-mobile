@@ -4,8 +4,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -56,8 +56,8 @@ fun HomeTopBar(
     actionIcon: @Composable () -> Unit = {
         IconButton(onClick = onActionIconClick) {
             Icon(
-                imageVector = Icons.Filled.Person,
-                contentDescription = "Perfil do Usuário"
+                imageVector = Icons.AutoMirrored.Filled.Logout,
+                contentDescription = "Sair"
             )
         }
     },

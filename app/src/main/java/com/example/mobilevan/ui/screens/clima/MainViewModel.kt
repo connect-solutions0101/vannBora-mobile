@@ -1,26 +1,31 @@
 package com.example.mobilevan.ui.screens.clima
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilevan.service.dto.WeatherResponse
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.example.mobilevan.config.RetrofitConfigHgbr
+import com.example.mobilevan.store.TokenStore
+import kotlinx.coroutines.flow.firstOrNull
 
 class MainViewModel : ViewModel() {
 
-    private val _weather = mutableStateOf<WeatherResponse?>(null)
-    val weather: State<WeatherResponse?> = _weather
+    var nomeUsuario by mutableStateOf("")
+    var weather by mutableStateOf<WeatherResponse?>(null)
 
-    fun fetchWeather() {
-        viewModelScope.launch {
-            try {
-                val response = RetrofitConfigHgbr.api.getWeather()
-                _weather.value = response
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+    suspend fun fetchWeather(context: Context) {
+        nomeUsuario = TokenStore.getUserName(context).firstOrNull() ?: ""
+        try {
+            val response = RetrofitConfigHgbr.api.getWeather()
+            weather = response
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
 }
