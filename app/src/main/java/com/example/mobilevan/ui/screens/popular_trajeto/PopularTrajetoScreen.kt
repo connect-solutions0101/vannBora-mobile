@@ -90,8 +90,15 @@ fun PopularTrajetoScreen(
         topBar = {
             HomeTopBar(
                 title = "Olá ${viewModel.nomeUsuario}",
-                onNavigationIconClick = {},
-                onActionIconClick = {},
+                onNavigationIconClick = {
+                    navController.navigate(Routes.SelecionarTrajeto.route)
+                },
+                onActionIconClick = {
+                    coroutineScope.launch {
+                        TokenStore.clear(context)
+                        navController.navigate(Routes.Login.route)
+                    }
+                },
                 containerColor = AzulVann
             )
         }

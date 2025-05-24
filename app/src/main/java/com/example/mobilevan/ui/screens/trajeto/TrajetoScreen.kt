@@ -71,19 +71,12 @@ fun TrajetoScreen(
             TopAppBar(
                 title = { viewModel.trajeto?.let { Text(it.nome, color = Color.White, fontSize = 20.sp) } },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = {
+                        navController.navigate(Routes.SelecionarTrajeto.route)
+                    }) {
                         Icon(
                             painter = painterResource(id = R.drawable.seta),
                             contentDescription = "Voltar",
-                            tint = Color.White
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.pause),
-                            contentDescription = "Pausar",
                             tint = Color.White
                         )
                     }
@@ -184,7 +177,9 @@ fun TrajetoScreen(
                     .padding(bottom = 36.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                IconButton(onClick = { }, modifier = Modifier.padding(end = 16.dp)) {
+                IconButton(onClick = {
+                    navController.navigate(Routes.ClimaScreen.route)
+                }, modifier = Modifier.padding(end = 16.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.cloud),
                         contentDescription = "Nuvem",
@@ -193,7 +188,9 @@ fun TrajetoScreen(
                     )
                 }
                 Spacer(modifier = Modifier.width(150.dp))
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    navController.navigate(Routes.SelecionarTrajeto.route)
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.x),
                         contentDescription = "Fechar",
