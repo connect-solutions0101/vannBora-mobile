@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.firstOrNull
 class MainViewModel: ViewModel(){
 
     var trajeto by mutableStateOf<TrajetoDTO?>(null)
+    var trajetoDependentes by mutableStateOf<List<DependenteDTO>?>(null)
 
     var dependenteAtualNumber by mutableStateOf<Int?>(0)
     var dependenteAtual by mutableStateOf<DependenteDTO?>(null)

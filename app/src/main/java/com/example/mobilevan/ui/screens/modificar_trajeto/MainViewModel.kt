@@ -21,6 +21,8 @@ class MainViewModel : ViewModel() {
     val listaAlunosTrajeto = mutableStateListOf<DependenteDTO>()
     val listaAlunosTrajetoAtual = mutableStateListOf<DependenteDTO>()
 
+    var iniciarTrajeto by mutableStateOf(false)
+
     suspend fun onScreenLoad(context: Context, trajetoId: String?) {
         token = TokenStore.getToken(context).firstOrNull() ?: ""
         userId = TokenStore.getUserId(context).firstOrNull() ?: 0
@@ -92,6 +94,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun onIniciarTrajetoClick(){
-
+        iniciarTrajeto = true
     }
 }

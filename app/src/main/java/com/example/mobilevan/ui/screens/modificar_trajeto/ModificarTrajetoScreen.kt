@@ -51,6 +51,14 @@ fun ModificarTrajetoScreen (
         viewModel.onScreenLoad(context, trajetoId)
     }
 
+    LaunchedEffect(viewModel.iniciarTrajeto) {
+        if (viewModel.iniciarTrajeto) {
+            navController.currentBackStackEntry
+                ?.savedStateHandle
+                ?.set("trajetoDependentes", viewModel.listaAlunosTrajetoAtual)
+            navController.navigate("Trajeto/1")
+        }
+    }
 
     Scaffold(
         modifier = Modifier
