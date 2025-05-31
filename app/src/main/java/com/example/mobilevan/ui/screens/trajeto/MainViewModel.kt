@@ -47,22 +47,22 @@ class MainViewModel: ViewModel(){
             e.printStackTrace()
         }
 
-        if (trajeto?.trajetoDependentes?.isNotEmpty() == true) {
-            dependenteAtual = trajeto!!.trajetoDependentes[0].responsavelDependente.dependente
+        if (trajetoDependentes?.isNotEmpty() == true) {
+            dependenteAtual = trajetoDependentes?.get(0)
         }
     }
 
     private fun updateDependenteAtual()  {
-        dependenteAtualNumber = dependenteAtualNumber?.plus(1)
+        if (trajetoDependentes.isNullOrEmpty()) return
 
-        if(dependenteAtualNumber!! >= (trajeto?.trajetoDependentes?.size ?: 0)) {
-            dependenteAtualNumber = 0
-            dependenteAtual = null
+        dependenteAtualNumber = (dependenteAtualNumber ?: 0) + 1
+
+        if (dependenteAtualNumber!! >= trajetoDependentes!!.size) {
             trajetoFinalizado = true
             return
         }
 
-        dependenteAtual = trajeto?.trajetoDependentes?.get(dependenteAtualNumber ?: 0)?.responsavelDependente?.dependente
+        dependenteAtual = trajetoDependentes!![dependenteAtualNumber!!]
     }
 
     fun onConfirmClick() {

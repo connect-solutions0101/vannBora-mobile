@@ -55,7 +55,7 @@ fun ModificarTrajetoScreen (
         if (viewModel.iniciarTrajeto) {
             navController.currentBackStackEntry
                 ?.savedStateHandle
-                ?.set("trajetoDependentes", viewModel.listaAlunosTrajetoAtual.toList())
+                ?.set("trajetoDependentes", ArrayList(viewModel.listaAlunosTrajetoAtual))
             navController.navigate("Trajeto/1")
         }
     }
