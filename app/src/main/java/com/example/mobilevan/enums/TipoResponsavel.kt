@@ -1,6 +1,8 @@
 package com.example.mobilevan.enums
 
-enum class TipoResponsavel {
+import java.io.Serializable
+
+enum class TipoResponsavel : Serializable {
     PADRAO("P", "Padrão"),
     FINANCEIRO("F", "Financeiro");
 

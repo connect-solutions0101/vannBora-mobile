@@ -62,7 +62,7 @@ fun TrajetoScreen(
     LaunchedEffect(Unit) {
         val listaTrajetoDependentes = navController.previousBackStackEntry
             ?.savedStateHandle
-            ?.get<List<DependenteDTO>>("trajetoDependentes")
+            ?.get<List<DependenteDTO>>("trajetoDependentes") ?: emptyList()
 
         viewModel.trajetoDependentes = listaTrajetoDependentes
 

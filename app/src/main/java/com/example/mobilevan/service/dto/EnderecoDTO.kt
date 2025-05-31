@@ -1,5 +1,7 @@
 package com.example.mobilevan.service.dto
 
+import java.io.Serializable
+
 data class EnderecoDTO(
     val id: Int,
     val logradouro: String,
@@ -8,4 +10,4 @@ data class EnderecoDTO(
     val cidade: String,
     val cep: String,
     val pontoReferencia: String?,
-)
+) : Serializable

@@ -63,7 +63,7 @@ fun ListagemTrajetosScreen(
         onSelecionarOpcao1 = {
             viewModel.showTrajetoDialog = false
             viewModel.trajetoSelecionado?.id?.let {
-                navController.navigate("Trajeto/$it")
+                navController.navigate("ModificarTrajeto/$it")
             }
         },
         labelButton2 = "Editar",

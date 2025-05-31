@@ -1,6 +1,8 @@
 package com.example.mobilevan.enums
 
-enum class Turno {
+import java.io.Serializable
+
+enum class Turno : Serializable {
     PADRAO("P", "Padrão"),
     INTEGRAL("I", "Integral");
 
