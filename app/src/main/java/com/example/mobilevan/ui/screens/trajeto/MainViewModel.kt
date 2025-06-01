@@ -22,6 +22,8 @@ class MainViewModel: ViewModel(){
 
     var trajetoFinalizado by mutableStateOf(false)
 
+    var modalInformacoesAdicionaisVisible by mutableStateOf(false)
+
     suspend fun onScreenLoad(context: Context, trajetoId: String) {
         val api = RetrofitConfig.instance.create(TrajetoService::class.java)
         val token = TokenStore.getToken(context).firstOrNull()
@@ -67,5 +69,13 @@ class MainViewModel: ViewModel(){
 
     fun onConfirmClick() {
         updateDependenteAtual()
+    }
+
+    fun onDismissRequest() {
+        modalInformacoesAdicionaisVisible = false
+    }
+
+    fun onMaisInformacoesClick() {
+        modalInformacoesAdicionaisVisible = true
     }
 }

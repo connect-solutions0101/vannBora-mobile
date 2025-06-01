@@ -41,6 +41,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
 import com.example.mobilevan.service.dto.DependenteDTO
+import com.example.mobilevan.ui.components.ModalInformacoesAdicionais
 import com.example.mobilevan.ui.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,6 +73,19 @@ fun TrajetoScreen(
             viewModel.onScreenLoad(context, trajetoId)
         }
     }
+
+    ModalInformacoesAdicionais(
+        nome = viewModel.dependenteAtual?.nome ?: "Carregando...",
+        telefone = viewModel.dependenteAtual?.responsaveis?.get(0)?.responsavel?.telefone ?: "Carregando...",
+        escola = viewModel.dependenteAtual?.escola?.nome ?: "Carregando...",
+        responsavel = viewModel.dependenteAtual?.responsaveis?.get(0)?.responsavel?.nome ?: "Carregando...",
+        parentesco = viewModel.dependenteAtual?.responsaveis?.get(0)?.responsavel?.parentesco ?: "Carregando...",
+        rua = viewModel.dependenteAtual?.responsaveis?.get(0)?.responsavel?.endereco?.logradouro ?: "Carregando...",
+        numero = viewModel.dependenteAtual?.responsaveis?.get(0)?.responsavel?.endereco?.numero ?: "Carregando...",
+        visible = viewModel.modalInformacoesAdicionaisVisible,
+        onDismissRequest = { viewModel.onDismissRequest() },
+        onConfirmClick = { viewModel.onDismissRequest() }
+    )
 
     Scaffold(
         topBar = {
@@ -133,7 +147,9 @@ fun TrajetoScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
-                    onClick = { },
+                    onClick = {
+                         viewModel.onMaisInformacoesClick()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
@@ -150,7 +166,7 @@ fun TrajetoScreen(
                             .wrapContentSize(Alignment.Center)
                     ) {
                         Text(
-                            text = "Mais detalhes",
+                            text = "Mais informações",
                             color = Color.Black,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
