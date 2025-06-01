@@ -1,9 +1,19 @@
 package com.example.mobilevan.ui.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,24 +42,45 @@ fun CardAluno(
             .size(width = 200.dp, height = 80.dp)
             .clickable(onClick = onClick)
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 8.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = nome,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = escola,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(vertical = 8.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = nome,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = escola,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Checkbox(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(24.dp),
+                checked = isSelected,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = AzulVann,
+                    uncheckedColor = Color(0xFFFBBF24),
+                    checkmarkColor = Color(0xFFFBBF24)
+                ),
+                onCheckedChange = null,
             )
         }
+
     }
 }
 
@@ -57,6 +88,7 @@ fun CardAluno(
 @Composable
 fun CardAlunoPrev() {
     CardAluno(
+        isSelected = true,
         nome = "Victor",
         escola = "SPTECH",
         onClick = {}

@@ -40,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilevan.R
+import com.example.mobilevan.service.dto.DependenteDTO
 import com.example.mobilevan.ui.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +60,12 @@ fun TrajetoScreen(
     }
 
     LaunchedEffect(Unit) {
+        val listaTrajetoDependentes = navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.get<List<DependenteDTO>>("trajetoDependentes") ?: emptyList()
+
+        viewModel.trajetoDependentes = listaTrajetoDependentes
+
         if (trajetoId == null) {
             navController.navigate(Routes.SelecionarTrajeto.route)
         } else {

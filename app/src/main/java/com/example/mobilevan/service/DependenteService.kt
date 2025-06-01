@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface DependenteService {
 
-    @GET("/dependentes/proprietarioServico/{proprietarioServicoId}")
+    @GET("dependentes/proprietarioServico/{proprietarioServicoId}")
     suspend fun getDependentes(
         @Path("proprietarioServicoId") proprietarioServicoId: String,
         @Header("Authorization") token: String

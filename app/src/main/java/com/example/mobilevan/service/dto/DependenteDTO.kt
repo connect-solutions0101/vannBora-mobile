@@ -1,6 +1,7 @@
 package com.example.mobilevan.service.dto
 
 import com.example.mobilevan.enums.Turno
+import java.io.Serializable
 
 data class DependenteDTO(
     val id: Int,
@@ -8,4 +9,4 @@ data class DependenteDTO(
     val turno: Turno,
     val escola: EscolaDTO,
     val responsaveis: List<ResponsavelDependenteDTO>,
-)
+) : Serializable
