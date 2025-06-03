@@ -29,7 +29,7 @@ Siga os passos abaixo para clonar, configurar e rodar o projeto localmente:
 ### 2. Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/Mobile-VannBora.git
+git clone https://github.com/connect-solutions0101/Mobile-VannBora.git
 cd Mobile-VannBora
 ```
 ### 3.  Abrir no Android Studio
