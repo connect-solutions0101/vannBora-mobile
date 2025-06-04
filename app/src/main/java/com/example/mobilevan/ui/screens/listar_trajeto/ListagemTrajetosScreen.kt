@@ -57,7 +57,7 @@ fun ListagemTrajetosScreen(
 
     ModalSelecionarTrajeto(
         showDialog = viewModel.showTrajetoDialog,
-        onDismiss = { },
+        onDismiss = { viewModel.showTrajetoDialog = false },
         title = "O que deseja fazer?",
         labelButton1 = "Iniciar",
         onSelecionarOpcao1 = {

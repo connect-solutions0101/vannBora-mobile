@@ -74,4 +74,5 @@ dependencies {
     implementation("io.coil-kt:coil-svg:2.4.0")
     implementation("androidx.datastore:datastore-preferences:1.1.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.burnoutcrew.composereorderable:reorderable:0.9.6")
 }

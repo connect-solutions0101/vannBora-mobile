@@ -53,6 +53,7 @@ class MainViewModel : ViewModel() {
                                 responsaveis = listOf(it.responsavelDependente),
                                 turno = it.responsavelDependente.dependente.turno,
                                 escola = it.responsavelDependente.dependente.escola,
+                                ordem = it.ordem
                             )
                         })
 
@@ -64,6 +65,7 @@ class MainViewModel : ViewModel() {
                                     responsaveis = listOf(it.responsavelDependente),
                                     turno = it.responsavelDependente.dependente.turno,
                                     escola = it.responsavelDependente.dependente.escola,
+                                    ordem = it.ordem
                                 )
                             }
                         )
