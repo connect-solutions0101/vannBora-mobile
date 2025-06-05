@@ -9,4 +9,5 @@ data class DependenteDTO(
     val turno: Turno,
     val escola: EscolaDTO,
     val responsaveis: List<ResponsavelDependenteDTO>,
+    var ordem: Int? = null,
 ) : Serializable

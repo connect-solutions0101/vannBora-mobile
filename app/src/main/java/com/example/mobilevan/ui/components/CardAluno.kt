@@ -40,7 +40,7 @@ fun CardAluno(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier
             .size(width = 200.dp, height = 80.dp)
-            .clickable(onClick = onClick)
+
     ) {
         Row(
             modifier = Modifier
@@ -69,6 +69,7 @@ fun CardAluno(
             }
             Checkbox(
                 modifier = Modifier
+                    .clickable(onClick = onClick)
                     .padding(start = 8.dp)
                     .size(24.dp),
                 checked = isSelected,

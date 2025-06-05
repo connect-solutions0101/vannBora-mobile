@@ -37,6 +37,7 @@ class MainViewModel : ViewModel() {
 
         buscarDependentes(userId, token)
         buscarDependentesTrajeto(trajetoId, token)
+        ordenarListaAlunos()
     }
 
     private suspend fun buscarDependentes(userId: Int?, token: String?) {
@@ -65,7 +66,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private suspend fun popularTrajeto(trajetoId: String?) {
+    private suspend fun popularTrajeto(trajetoId: String?, listaOrdenada: List<DependenteResponsavelRequest>) {
         val api = RetrofitConfig.instance.create(TrajetoService::class.java)
 
         if (trajetoId != null) {
@@ -76,7 +77,7 @@ class MainViewModel : ViewModel() {
             }
 
             try {
-                val response = api.popularTrajeto(trajetoId, "Bearer $token", listaAlunosParaSalvar)
+                val response = api.popularTrajeto(trajetoId, "Bearer $token", listaOrdenada)
 
                 if (response.raw().code == 200) {
                     println("Trajeto populated successfully")
@@ -107,7 +108,8 @@ class MainViewModel : ViewModel() {
                         listaAlunosParaSalvar.addAll(trajeto.trajetoDependentes.map {
                             DependenteResponsavelRequest(
                                 idDependente = it.responsavelDependente.dependenteId,
-                                idResponsavel = it.responsavelDependente.responsavelId
+                                idResponsavel = it.responsavelDependente.responsavelId,
+                                ordem = it.ordem
                             )
                         })
                     }
@@ -122,23 +124,47 @@ class MainViewModel : ViewModel() {
     }
 
     suspend fun onNovoTrajetoClick(trajetoId: String?) {
+        ordenarListaAlunos()
+
+        val listaParaSalvarComOrdem  = listaAlunos
+            .mapIndexedNotNull { index, aluno ->
+                val responsavel = listaAlunosParaSalvar.find { it.idDependente == aluno.id }
+                responsavel?.copy(ordem = index)
+            }
+
         if (trajetoId != null) {
-            popularTrajeto(trajetoId)
+            popularTrajeto(trajetoId, listaParaSalvarComOrdem )
         } else {
             println("Trajeto ID is null")
         }
+    }
+
+    fun aoConfirmarResponsavelAluno(){
+        val ordem = listaAlunos.indexOfFirst { it.id == dependenteId }
+        showResponsavelDialog = false
+        listaAlunosParaSalvar.add(
+            DependenteResponsavelRequest(
+                idDependente = dependenteId!!,
+                idResponsavel = responsavelSelecionado!!.id,
+                ordem = ordem
+            )
+        )
+        listaResponsaveis.clear()
     }
 
     fun aoClicarCardAluno(
         aluno: DependenteDTO,
         isSelected: Boolean
     ) {
+        val ordem = listaAlunos.indexOfFirst { it.id == aluno.id }
+
         if(isSelected){
             if(aluno.responsaveis.size == 1){
                 listaAlunosParaSalvar.add(
                     DependenteResponsavelRequest(
                         idDependente = aluno.id,
                         idResponsavel = aluno.responsaveis[0].responsavelId,
+                        ordem = ordem
                     )
                 )
             }else{
@@ -149,10 +175,40 @@ class MainViewModel : ViewModel() {
         }else{
             val alunoRemover = listaAlunosParaSalvar.find { it.idDependente == aluno.id }
             listaAlunosParaSalvar.remove(alunoRemover)
+            listaAlunos.find { it.id == aluno.id }?.ordem = null
         }
+
+        ordenarListaAlunos()
     }
 
     fun isAlunoSelecionado(aluno: DependenteDTO): Boolean {
         return listaAlunosParaSalvar.any { it.idDependente == aluno.id }
+    }
+
+    fun ordenarListaAlunos() {
+        listaAlunos.forEach { aluno ->
+            val correspondente = listaAlunosParaSalvar.find { it.idDependente == aluno.id }
+            if (correspondente != null) {
+                aluno.ordem = correspondente.ordem
+            }
+        }
+
+        listaAlunos.sortWith(compareBy { it.ordem ?: Int.MAX_VALUE })
+    }
+
+    fun moverAluno(from: Int, to: Int) {
+        if (from == to) return
+
+        listaAlunos.apply {
+            add(to, removeAt(from))
+        }
+
+        // Atualiza a ordem de todos os alunos com base na posição
+        listaAlunos.forEachIndexed { index, aluno ->
+            aluno.ordem = index
+
+            // Se o aluno estiver na listaParaSalvar, também sincroniza a ordem dele
+            listaAlunosParaSalvar.find { it.idDependente == aluno.id }?.ordem = index
+        }
     }
 }
