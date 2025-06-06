@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.firstOrNull
 class MainViewModel : ViewModel() {
 
     var nomeUsuario by mutableStateOf("")
+
+    var searchInput by mutableStateOf("")
+
     var token by mutableStateOf("")
     var userId by mutableStateOf(0)
 
