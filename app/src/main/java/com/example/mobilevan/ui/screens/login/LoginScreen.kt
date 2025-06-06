@@ -178,22 +178,6 @@ fun LoginScreen(
         ) {
             Text(text = "Acessar", color = Color.Black, fontWeight = FontWeight.SemiBold)
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        TextButton(
-            onClick = {navController.navigate(Routes.NovoTrajeto.route)},
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(buildAnnotatedString {
-                withStyle(SpanStyle(color = Color.Black)) {
-                    append("Não tem uma conta ")
-                }
-                withStyle(SpanStyle(color = Color.Blue)) {
-                    append("clique aqui!")
-                }
-            })
-        }
     }
 }
 @Preview()

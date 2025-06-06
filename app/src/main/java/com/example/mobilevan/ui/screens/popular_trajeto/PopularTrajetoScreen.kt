@@ -1,7 +1,7 @@
 package com.example.mobilevan.ui.screens.popular_trajeto
 
 import HomeTopBar
-import SearchBarPrev
+import SearchBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -113,7 +113,12 @@ fun PopularTrajetoScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            SearchBarPrev()
+            SearchBar(
+                searchText = viewModel.searchInput
+                , onSearchTextChanged = {
+                    viewModel.searchInput = it
+                }
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Disponíveis",
@@ -136,7 +141,9 @@ fun PopularTrajetoScreen(
                         Text("Nenhum aluno disponível.")
                     }
                 } else {
-                    items(viewModel.listaAlunos, key = { it.id }) { aluno ->
+                    items(viewModel.listaAlunos.filter {
+                        it.nome.contains(viewModel.searchInput, ignoreCase = true)
+                    }, key = { it.id }) { aluno ->
                         ReorderableItem(reorderState, key = aluno.id) { isDragging ->
                             CardAluno(
                                 isSelected = viewModel.isAlunoSelecionado(aluno),

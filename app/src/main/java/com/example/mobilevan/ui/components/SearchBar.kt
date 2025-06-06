@@ -16,22 +16,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilevan.ui.theme.AzulVann
 
-@Preview
-@Composable
-fun SearchBarPrev() {
-    SearchBar()
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(modifier: Modifier = Modifier) {
-    var searchText by remember { mutableStateOf("") }
-
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    searchText: String,
+    onSearchTextChanged: (String) -> Unit
+) {
     OutlinedTextField(
         value = searchText,
         onValueChange = {
-            searchText = it
-//            onSearch(it)
+            onSearchTextChanged(it)
         },
         modifier = modifier
             .fillMaxWidth()

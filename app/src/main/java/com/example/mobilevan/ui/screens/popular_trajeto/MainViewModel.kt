@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.firstOrNull
 class MainViewModel : ViewModel() {
     var nomeUsuario by mutableStateOf("")
 
+    var searchInput by mutableStateOf("")
+
     val listaAlunos = mutableStateListOf<DependenteDTO>()
     val listaAlunosParaSalvar = mutableStateListOf<DependenteResponsavelRequest>()
     var trajetoPopulado by mutableStateOf(false)

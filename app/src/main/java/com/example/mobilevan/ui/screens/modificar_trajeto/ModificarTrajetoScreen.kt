@@ -1,7 +1,7 @@
 package com.example.mobilevan.ui.screens.modificar_trajeto
 
 import HomeTopBar
-import SearchBarPrev
+import SearchBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +33,6 @@ import androidx.navigation.NavHostController
 import com.example.mobilevan.store.TokenStore
 import com.example.mobilevan.ui.components.CardAluno
 import com.example.mobilevan.ui.navigation.Routes
-import com.example.mobilevan.ui.screens.modificar_trajeto.MainViewModel
 import com.example.mobilevan.ui.theme.AzulVann
 import kotlinx.coroutines.launch
 
@@ -89,7 +88,12 @@ fun ModificarTrajetoScreen (
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            SearchBarPrev()
+            SearchBar(
+                searchText = viewModel.searchInput
+                , onSearchTextChanged = {
+                    viewModel.searchInput = it
+                }
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Disponíveis",
