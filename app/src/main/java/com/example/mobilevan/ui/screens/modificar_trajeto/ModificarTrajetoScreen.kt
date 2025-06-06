@@ -113,7 +113,9 @@ fun ModificarTrajetoScreen (
                 if (viewModel.listaAlunosTrajeto.isEmpty()) {
                     Text("Nenhum aluno disponível.")
                 } else {
-                    viewModel.listaAlunosTrajeto.forEach { aluno ->
+                    viewModel.listaAlunosTrajeto.filter {
+                        it.nome.contains(viewModel.searchInput, ignoreCase = true)
+                    }.forEach { aluno ->
                         CardAluno(
                             isSelected = viewModel.isAlunoSelecionado(aluno),
                             nome = aluno.nome,
