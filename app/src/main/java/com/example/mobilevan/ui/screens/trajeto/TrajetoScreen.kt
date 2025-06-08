@@ -178,7 +178,7 @@ fun TrajetoScreen(
             Spacer(modifier = Modifier.height(60.dp))
             IconButton(
                 onClick = {
-                     viewModel.onConfirmClick()
+                     viewModel.onConfirmClick(context)
                 },
                 modifier = Modifier
                     .size(120.dp)
