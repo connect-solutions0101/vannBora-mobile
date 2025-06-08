@@ -5,12 +5,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mobilevan.config.RetrofitConfig
+import com.example.mobilevan.service.EmbarqueService
 import com.example.mobilevan.service.TrajetoService
 import com.example.mobilevan.service.dto.DependenteDTO
 import com.example.mobilevan.service.dto.TrajetoDTO
+import com.example.mobilevan.service.request.EmbarqueRequest
 import com.example.mobilevan.store.TokenStore
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 class MainViewModel: ViewModel(){
 
@@ -54,8 +61,53 @@ class MainViewModel: ViewModel(){
         }
     }
 
-    private fun updateDependenteAtual()  {
+    suspend fun registrarEmbarque(context: Context, aluno: DependenteDTO) {
+        val api = RetrofitConfig.instance.create(EmbarqueService::class.java)
+        val token = TokenStore.getToken(context).firstOrNull()
+        val userId = TokenStore.getUserId(context).firstOrNull()
+
+        if (token.isNullOrEmpty() || userId == null) {
+            println("Token or User ID is null")
+            return
+        }
+
+        val dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+
+        val registro = EmbarqueRequest(
+            dataHora = dataHora,
+            tipo = "EMBARQUE",
+            responsavelId = aluno.responsaveis[0].responsavelId,
+            dependenteId = aluno.id
+        )
+
+        println(registro)
+
+        try {
+            val response = api.registrar(
+                "Bearer $token",
+                registro
+            )
+
+            if (response.raw().code == 200) {
+                println("Embarque registrado com sucesso")
+            } else {
+                println("Error ao registrar embarque: ${response.raw().code}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun updateDependenteAtual(context: Context)  {
         if (trajetoDependentes.isNullOrEmpty()) return
+
+        viewModelScope.launch {
+            dependenteAtual?.let { aluno ->
+                registrarEmbarque(context, aluno)
+            } ?: run {
+                println("Dependente atual é nulo")
+            }
+        }
 
         dependenteAtualNumber = (dependenteAtualNumber ?: 0) + 1
 
@@ -67,8 +119,8 @@ class MainViewModel: ViewModel(){
         dependenteAtual = trajetoDependentes!![dependenteAtualNumber!!]
     }
 
-    fun onConfirmClick() {
-        updateDependenteAtual()
+    fun onConfirmClick(context: Context) {
+        updateDependenteAtual(context)
     }
 
     fun onDismissRequest() {
