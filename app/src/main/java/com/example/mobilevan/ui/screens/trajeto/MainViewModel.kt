@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilevan.config.RetrofitConfig
 import com.example.mobilevan.service.EmbarqueService
+import com.example.mobilevan.service.NorificacaoService
 import com.example.mobilevan.service.TrajetoService
 import com.example.mobilevan.service.dto.DependenteDTO
 import com.example.mobilevan.service.dto.TrajetoDTO
@@ -63,6 +64,7 @@ class MainViewModel: ViewModel(){
 
     suspend fun registrarEmbarque(context: Context, aluno: DependenteDTO) {
         val api = RetrofitConfig.instance.create(EmbarqueService::class.java)
+        val apiNotificacao = RetrofitConfig.instance.create(NorificacaoService::class.java)
         val token = TokenStore.getToken(context).firstOrNull()
         val userId = TokenStore.getUserId(context).firstOrNull()
 
@@ -71,7 +73,7 @@ class MainViewModel: ViewModel(){
             return
         }
 
-        val dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+        var dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
 
         val registro = EmbarqueRequest(
             dataHora = dataHora,
@@ -79,8 +81,6 @@ class MainViewModel: ViewModel(){
             responsavelId = aluno.responsaveis[0].responsavelId,
             dependenteId = aluno.id
         )
-
-        println(registro)
 
         try {
             val response = api.registrar(
@@ -92,6 +92,21 @@ class MainViewModel: ViewModel(){
                 println("Embarque registrado com sucesso")
             } else {
                 println("Error ao registrar embarque: ${response.raw().code}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
+
+        try {
+            val notificacao = "Embarque registrado para ${aluno.nome} às ${dataHora}."
+            val response = apiNotificacao.enviarNotificacao("Bearer $token", notificacao)
+
+            if (response.isSuccessful) {
+                println("Notificação enviada com sucesso")
+            } else {
+                println("Erro ao enviar notificação: ${response.code()}")
             }
         } catch (e: Exception) {
             e.printStackTrace()
